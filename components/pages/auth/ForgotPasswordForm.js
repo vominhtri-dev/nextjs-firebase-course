@@ -27,19 +27,17 @@ export default function ForgotPasswordForm() {
     // funtion submit form
     const handleSubmit = async (values, actions) => {
         try {
-            const data = await sendResetPassService(values.email)
-
-            console.log(data)
-            // const { email, accessToken, uid } = userCredential.user
-            // dispatch(loginAction({ email, accessToken, uid }))
+            await sendResetPassService(values.email)
             toast({
                 title: "Đã gữi thành công",
-                description: "Hãy kiểm tra lại hòm thư của bạn",
+                description:
+                    "Hãy kiểm tra lại hòm thư của bạn (hoặc hòm thư spam)",
                 status: "success",
-                duration: 2000,
+                duration: 3000,
                 position: "top-right",
                 isClosable: true,
             })
+            actions.resetForm()
             actions.setSubmitting(false)
         } catch (error) {
             toast({

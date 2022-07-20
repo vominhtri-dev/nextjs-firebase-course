@@ -24,7 +24,7 @@ const NavbarModel = () => {
 
     const FEATURE = [
         {
-            title: "Danh mục Khóa học",
+            title: "Danh mục khóa học",
             des: "Cung cấp kho tàng với số lượng khóa học đồ sộ.",
             icon: <BsBook />,
             path: "/courses",
@@ -92,7 +92,7 @@ const NavbarModel = () => {
                                 <GridItem
                                     key={idx}
                                     display='flex'
-                                    alignItems='center'
+                                    alignItems='flex-start'
                                     cursor='pointer'
                                     _hover={{ bgColor: "gray.100" }}
                                     borderRadius='7px'
@@ -103,6 +103,7 @@ const NavbarModel = () => {
                                     <IconButton
                                         icon={fea.icon}
                                         colorScheme={fea.color}
+                                        mt='1'
                                     />
                                     <Box pl='2'>
                                         <Text fontWeight='bold'>

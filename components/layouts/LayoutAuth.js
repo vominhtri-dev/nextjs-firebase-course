@@ -2,7 +2,6 @@ import { Box, Grid, GridItem, Image } from "@chakra-ui/react"
 import Link from "next/link"
 import React from "react"
 import BannerHeading from "../pages/home/BannerHeading"
-// import favicon from "../../public/favicon.png"
 
 const LayoutAuth = ({ children }) => {
     return (
@@ -30,6 +29,7 @@ const LayoutAuth = ({ children }) => {
                             height='40px'
                             property='fill'
                             mr='4'
+                            alt='logo'
                         />
                         <Link href='/'>TRIDEV.IO</Link>
                     </Box>

@@ -18,7 +18,7 @@ const AuthComponent = ({ children }) => {
             }
         })
         return () => unsubscribe()
-    }, [])
+    }, [dispatch])
 
     if (isLoading) {
         return <Loading />
