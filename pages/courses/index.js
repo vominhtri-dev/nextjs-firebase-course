@@ -1,17 +1,16 @@
 import Head from "next/head"
-import Banner from "../components/pages/home/Banner"
-import CatelogySection from "../components/pages/home/CatelogySection"
-import CatelogyTab from "../components/pages/home/CatelogyTab"
-import CourseSection from "../components/pages/home/CourseSection"
-import FeatureSection from "../components/pages/home/FeatureSection"
+import Banner from "../../components/pages/home/Banner"
+import CatelogyTab from "../../components/pages/home/CatelogyTab"
+import CourseSection from "../../components/pages/home/CourseSection"
+import Footer from "../../components/layouts/Footer"
 
-export default function Home() {
+export default function index() {
     return (
         <div>
             <Head>
                 <title>
-                    Tridev.io - Học lập trình miễn phí | Học lập trình
-                    Javascript | Học lập trình cho người mới
+                    Danh sách các khóa học | Tridev.io - Học lập trình miễn phí
+                    | Học lập trình cho người mới
                 </title>
                 <meta
                     name='description'
@@ -19,19 +18,17 @@ export default function Home() {
                 />
                 <link rel='icon' type='image/png' href='/code.png' />
             </Head>
-
             <Banner
-                pageText='Tridev'
+                pageText='Course'
                 headingText='Học lập trình cho người mới bắt đầu'
                 desText='Nền tảng Tridev.io cung cấp cho bạn các khóa học,
                 bài giảng, thông tin về lập trình một cách hoàn toàn
                 miễn phí.'
                 ctaText='Học ngay nào'
             />
+
             <CatelogyTab />
             <CourseSection />
-            <FeatureSection />
-            <CatelogySection />
         </div>
     )
 }
