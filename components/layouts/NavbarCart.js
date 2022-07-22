@@ -1,6 +1,5 @@
 import {
 	Box,
-	Button,
 	Grid,
 	GridItem,
 	IconButton,
@@ -8,6 +7,13 @@ import {
 	Text,
 	Image,
 	useOutsideClick,
+	HStack,
+	Spacer,
+	Badge,
+	Flex,
+	Link,
+	Divider,
+	Button,
 } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
@@ -28,7 +34,8 @@ const NavbarCart = () => {
 			_id: '1',
 			title: 'Khóa học javascript nâng cao',
 			author: 'Võ Văn T',
-			price: '100',
+			priceOrigin: '200',
+			priceSell: '100',
 			thumbNail:
 				'https://ih1.redbubble.net/image.382749689.2902/mp,504x498,matte,f8f8f8,t-pad,600x600,f8f8f8.u2.jpg',
 		},
@@ -36,7 +43,8 @@ const NavbarCart = () => {
 			_id: '2',
 			title: 'Khóa học Reactjs, redux, hoc, hook.',
 			author: 'Võ Văn T',
-			price: '100',
+			priceOrigin: '200',
+			priceSell: '100',
 			thumbNail:
 				'https://ih1.redbubble.net/image.382749689.2902/mp,504x498,matte,f8f8f8,t-pad,600x600,f8f8f8.u2.jpg',
 		},
@@ -44,7 +52,8 @@ const NavbarCart = () => {
 			_id: '3',
 			title: 'Khóa học html & css cho người mới bắt đầu',
 			author: 'Võ Văn T',
-			price: '100',
+			priceOrigin: '200',
+			priceSell: '100',
 			thumbNail:
 				'https://ih1.redbubble.net/image.382749689.2902/mp,504x498,matte,f8f8f8,t-pad,600x600,f8f8f8.u2.jpg',
 		},
@@ -71,9 +80,21 @@ const NavbarCart = () => {
 					p='4'
 					ref={modelRef}
 				>
-					<Text fontWeight='bold' h='8'>
-						Giỏ hàng
-					</Text>
+					<HStack>
+						<Text fontWeight='bold' h='8'>
+							Giỏ hàng
+						</Text>
+						<Spacer />
+						<NextLink href='/cart'>
+							<Link
+								h='8'
+								_hover={{ color: 'messenger.600' }}
+								onClick={() => setIsModalOpen(false)}
+							>
+								Xem tất cả
+							</Link>
+						</NextLink>
+					</HStack>
 
 					<Grid
 						templateColumns={{
@@ -110,10 +131,34 @@ const NavbarCart = () => {
 										<Text fontWeight='bold'>
 											{course.title}
 										</Text>
+										<Badge
+											colorScheme='orange'
+											fontSize='0.7em'
+										>
+											Giảm 25%
+										</Badge>
+										<Badge
+											colorScheme='green'
+											fontSize='0.7em'
+											ml='1'
+										>
+											Bán chạy
+										</Badge>
 
-										<Text fontSize='sm'>
-											£ {course.price}
-										</Text>
+										<Flex>
+											<Text
+												fontSize='sm'
+												fontWeight='bold'
+												mr='2'
+											>
+												£ {course.priceSell}
+											</Text>
+											<Text fontSize='sm'>
+												<strike>
+													£ {course.priceOrigin}
+												</strike>
+											</Text>
+										</Flex>
 									</Box>
 								</NextLink>
 								<IconButton
@@ -126,6 +171,30 @@ const NavbarCart = () => {
 							</GridItem>
 						))}
 					</Grid>
+
+					<Divider orientation='horizontal' mt='4' />
+					<HStack my='4'>
+						<Text fontWeight='bold'>
+							Tổng tiền {` (${courses.length})`}
+						</Text>
+						<Spacer />
+
+						<Text fontWeight='medium' mr='2'>
+							£ 300
+						</Text>
+						<Text fontSize='sm'>
+							<strike>£ 600</strike>
+						</Text>
+					</HStack>
+					<NextLink href='/cart'>
+						<Button
+							colorScheme='messenger'
+							w='full'
+							onClick={() => setIsModalOpen(false)}
+						>
+							Thanh toán
+						</Button>
+					</NextLink>
 				</Box>
 			</SlideFade>
 		</Box>
