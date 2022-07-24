@@ -132,7 +132,17 @@ export default function LoginForm() {
 						textHolder='Nhập mật khẩu của bạn'
 					/>
 					<Flex justifyContent='flex-end' my='2'>
-						<Link href='/forgot-password'>Quên mật khẩu ?</Link>
+						<NextLink href='/forgot-password' passHref>
+							<Link
+								textDecoration='none'
+								transition='0.5s'
+								ml='1'
+								color='messenger.400'
+								_hover={{ color: 'messenger.600' }}
+							>
+								Quên mật khẩu ?
+							</Link>
+						</NextLink>
 					</Flex>
 					<Button
 						mt={4}

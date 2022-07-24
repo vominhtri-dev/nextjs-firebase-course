@@ -1,9 +1,7 @@
 import {
 	Box,
-	Button,
 	Container,
 	Flex,
-	IconButton,
 	Input,
 	InputGroup,
 	InputLeftElement,
@@ -11,7 +9,6 @@ import {
 	Stack,
 	Text,
 } from '@chakra-ui/react'
-import { AiOutlineShoppingCart } from 'react-icons/ai'
 import NextLink from 'next/link'
 import { SearchIcon } from '@chakra-ui/icons'
 import Image from 'next/image'
@@ -19,10 +16,9 @@ import logoImg from '../../public/favicon.png'
 import { useRouter } from 'next/router'
 import NavbarModel from './NavbarModel'
 import NavbarMobile from './NavbarMobile'
-import { useSelector, useDispatch } from 'react-redux'
-import { logoutService } from '../../service/auth'
-import { logoutAction } from '../../redux/slice/authSlice'
+
 import NavbarCart from './NavbarCart'
+import NavbarUser from './NavbarUser'
 
 const Navbar = () => {
 	const NAVLINK = [
@@ -37,14 +33,6 @@ const Navbar = () => {
 	]
 
 	const { pathname } = useRouter()
-	const { isLogin, currentUser } = useSelector((st) => st.auth)
-	const dispatch = useDispatch()
-
-	// funtion logout
-	const handleLogout = async () => {
-		await logoutService()
-		dispatch(logoutAction())
-	}
 
 	return (
 		<Box bg='white' boxShadow='base' pos='fixed' zIndex='999' w='full'>
@@ -99,8 +87,12 @@ const Navbar = () => {
 						align='center'
 						display={['none', 'none', 'flex']}
 					>
+						{/* List Cart  */}
 						<NavbarCart />
-						{!isLogin ? (
+
+						{/* User dropdown  */}
+						<NavbarUser />
+						{/* {!isLogin ? (
 							<NextLink href='/login'>
 								<Button
 									colorScheme='messenger'
@@ -121,7 +113,7 @@ const Navbar = () => {
 								{currentUser?.displayName}
 							</Button>
 							// </NextLink>
-						)}
+						)} */}
 					</Stack>
 
 					{/* Show mobile bar  */}

@@ -19,6 +19,7 @@ import NextLink from 'next/link'
 const NavbarMobile = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const modelRef = useRef()
+	const router = useRouter()
 	const NAVLINK = [
 		{
 			path: '/',
@@ -37,8 +38,6 @@ const NavbarMobile = () => {
 			title: 'Giỏ hàng',
 		},
 	]
-
-	const router = useRouter()
 
 	useOutsideClick({
 		ref: modelRef,
