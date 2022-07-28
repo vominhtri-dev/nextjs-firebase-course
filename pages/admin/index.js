@@ -1,12 +1,19 @@
-import React from 'react'
-import AdminLayout from '../../components/layouts/AdminLayout'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 
-const index = () => {
-	return <div>index</div>
+const Index = () => {
+	const router = useRouter()
+	useEffect(() => {
+		if (router.pathname === '/admin') {
+			router.push('/admin/dashboard')
+		}
+	}, [router])
+
+	return <></>
 }
 
-index.getLayout = function getLayout(page) {
-	return <AdminLayout>{page}</AdminLayout>
+Index.getLayout = function getLayout(page) {
+	return <>{page}</>
 }
 
-export default index
+export default Index

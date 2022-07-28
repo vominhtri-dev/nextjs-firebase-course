@@ -2,6 +2,7 @@ import {
 	Box,
 	Button,
 	Grid,
+	HStack,
 	IconButton,
 	Input,
 	InputGroup,
@@ -14,9 +15,12 @@ import { useRef, useState } from 'react'
 import { ChevronLeftIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import { AiOutlineUser } from 'react-icons/ai'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
+import NavbarUser from './NavbarUser'
 import NextLink from 'next/link'
 
 const NavbarMobile = () => {
+	const { currentUser, isLogin } = useSelector((st) => st.auth)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const modelRef = useRef()
 	const router = useRouter()
@@ -46,21 +50,23 @@ const NavbarMobile = () => {
 
 	return (
 		<Box pos='relative'>
-			<IconButton
-				icon={<ChevronLeftIcon />}
-				size='sm'
-				colorScheme='messenger'
-				mr='4'
-				variant='ghost'
-				onClick={() => router.back()}
-			/>
-			<IconButton
-				icon={<HamburgerIcon />}
-				size='sm'
-				variant='ghost'
-				onClick={() => setIsModalOpen((prev) => !prev)}
-			/>
-
+			<HStack>
+				<IconButton
+					icon={<ChevronLeftIcon />}
+					size='sm'
+					colorScheme='messenger'
+					variant='ghost'
+					onClick={() => router.back()}
+				/>
+				<IconButton
+					icon={<HamburgerIcon />}
+					size='sm'
+					variant='ghost'
+					onClick={() => setIsModalOpen((prev) => !prev)}
+				/>
+				{/* User panel */}
+				<NavbarUser />
+			</HStack>
 			<SlideFade in={isModalOpen} offsetY='40px' unmountOnExit='true'>
 				<Box
 					w={{ base: '100vw', sm: 'sm', md: '600px' }}
@@ -94,6 +100,16 @@ const NavbarMobile = () => {
 								borderRadius='10'
 							/>
 						</InputGroup>
+						{currentUser.isAdmin && (
+							<Text
+								onClick={() => setIsModalOpen(false)}
+								color='#4549e0'
+							>
+								<NextLink href={`/admin`}>
+									Trang quản trị
+								</NextLink>
+							</Text>
+						)}
 
 						{NAVLINK.map((navlink, idx) => (
 							<Text
@@ -109,13 +125,16 @@ const NavbarMobile = () => {
 								</NextLink>
 							</Text>
 						))}
-						<Button
-							colorScheme='messenger'
-							size='sm'
-							leftIcon={<AiOutlineUser />}
-						>
-							Dùng thử free
-						</Button>
+						{!isLogin && (
+							<Button
+								colorScheme='messenger'
+								size='sm'
+								leftIcon={<AiOutlineUser />}
+								onClick={() => router.push('/login')}
+							>
+								Đăng nhập
+							</Button>
+						)}
 					</Grid>
 				</Box>
 			</SlideFade>

@@ -7,7 +7,6 @@ import {
 	Avatar,
 	Box,
 	Badge,
-	Image,
 	Link,
 	IconButton,
 	HStack,
@@ -17,20 +16,22 @@ import {
 	Button,
 	Stack,
 } from '@chakra-ui/react'
-
 import level from '../../../constant/level'
+import Image from 'next/image'
 
 const CourseCard = ({ course, showCatelogy }) => {
 	return (
 		<Box overflow='hidden' bg='white' shadow='md' borderRadius='10px'>
 			<Box pos='relative'>
-				<Image
-					src={course.thumbnail}
-					alt='thumbnail'
-					width='100%'
-					height='200'
-					objectFit={'cover'}
-				/>
+				<Box w='full' h='200' pos='relative'>
+					<Image
+						src={course.thumbnail}
+						alt='thumbnail'
+						layout='fill'
+						objectFit='cover'
+						priority='true'
+					/>
+				</Box>
 				{showCatelogy && (
 					<Badge pos='absolute' top='4' left='4' colorScheme='green'>
 						{course.catelogy}

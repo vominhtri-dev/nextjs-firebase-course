@@ -46,7 +46,12 @@ const CartList = () => {
 					p='2'
 				>
 					<NextLink href={`/courses/${course._id}`}>
-						<Image src={course.thumbNail} w='20' h='20' />
+						<Image
+							src={course.thumbNail}
+							w='20'
+							h='20'
+							alt='thumbNail'
+						/>
 					</NextLink>
 					<NextLink href={`/courses/${course._id}`}>
 						<Box mx='4' flexGrow='2'>

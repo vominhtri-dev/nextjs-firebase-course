@@ -120,6 +120,7 @@ const NavbarCart = () => {
 										src={course.thumbNail}
 										w='10'
 										h='10'
+										alt='thumbNail'
 										onClick={() => setIsModalOpen(false)}
 									/>
 								</NextLink>

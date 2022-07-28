@@ -92,28 +92,6 @@ const Navbar = () => {
 
 						{/* User dropdown  */}
 						<NavbarUser />
-						{/* {!isLogin ? (
-							<NextLink href='/login'>
-								<Button
-									colorScheme='messenger'
-									size='sm'
-									display={['none', 'none', 'block']}
-								>
-									Đăng nhập
-								</Button>
-							</NextLink>
-						) : (
-							// <NextLink href='/user'>
-							<Button
-								colorScheme='messenger'
-								size='sm'
-								display={['none', 'none', 'block']}
-								onClick={handleLogout}
-							>
-								{currentUser?.displayName}
-							</Button>
-							// </NextLink>
-						)} */}
 					</Stack>
 
 					{/* Show mobile bar  */}

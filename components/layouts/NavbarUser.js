@@ -5,20 +5,16 @@ import {
 	IconButton,
 	SlideFade,
 	Text,
-	Image,
 	useOutsideClick,
 	HStack,
-	Spacer,
 	Badge,
-	Flex,
-	Link,
 	Divider,
 	Button,
 	Avatar,
+	useMediaQuery,
 } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import NextLink from 'next/link'
-import { CloseIcon } from '@chakra-ui/icons'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutService } from '../../service/auth'
 import { logoutAction } from '../../redux/slice/authSlice'
@@ -29,6 +25,7 @@ const NavbarUser = () => {
 	const modelRef = useRef()
 	const dispatch = useDispatch()
 	const router = useRouter()
+	const [isLargerThan768] = useMediaQuery('(min-width: 768px)')
 
 	// funtion logout
 	const handleLogout = async () => {
@@ -43,7 +40,7 @@ const NavbarUser = () => {
 	})
 	const NAVLINK = [
 		{
-			path: '/',
+			path: '/profile',
 			title: 'Trang cá nhân',
 		},
 		{
@@ -55,31 +52,41 @@ const NavbarUser = () => {
 			title: 'Danh sách yêu thích',
 		},
 		{
-			path: '/cart',
+			path: '/bookmark',
 			title: 'Bài viết đã lưu',
 		},
 	]
+
+	const renderAvatar = () => {
+		return isLargerThan768 ? (
+			<Button
+				colorScheme='messenger'
+				size='sm'
+				onClick={() => setIsModalOpen((prev) => !prev)}
+			>
+				{currentUser?.displayName}
+			</Button>
+		) : (
+			<Button
+				rounded='full'
+				p='0'
+				onClick={() => setIsModalOpen((prev) => !prev)}
+			>
+				<Avatar size='sm' src={currentUser?.photoURL} />
+			</Button>
+		)
+	}
+
 	return (
 		<Box pos='relative'>
 			{!isLogin ? (
 				<NextLink href='/login'>
-					<Button
-						colorScheme='messenger'
-						size='sm'
-						display={['none', 'none', 'block']}
-					>
+					<Button colorScheme='messenger' size='sm'>
 						Đăng nhập
 					</Button>
 				</NextLink>
 			) : (
-				<Button
-					colorScheme='messenger'
-					size='sm'
-					display={['none', 'none', 'block']}
-					onClick={() => setIsModalOpen((prev) => !prev)}
-				>
-					{currentUser?.displayName}
-				</Button>
+				renderAvatar()
 			)}
 
 			<SlideFade in={isModalOpen} offsetY='40px' unmountOnExit='true'>
@@ -96,7 +103,7 @@ const NavbarUser = () => {
 					ref={modelRef}
 				>
 					<HStack my='2' bg='blue.50' p='2' rounded='md'>
-						<Avatar size='sm' />
+						<Avatar size='sm' src={currentUser?.photoURL} />
 						<Box my='2'>
 							<Text fontWeight='medium'>
 								{currentUser.displayName}
@@ -107,6 +114,15 @@ const NavbarUser = () => {
 						</Box>
 					</HStack>
 
+					{currentUser.isAdmin && (
+						<Text
+							onClick={() => setIsModalOpen(false)}
+							my='2'
+							color='#4549e0'
+						>
+							<NextLink href={`/admin`}>Trang quản trị</NextLink>
+						</Text>
+					)}
 					{NAVLINK.map((navlink, idx) => (
 						<Text
 							color={
@@ -116,7 +132,7 @@ const NavbarUser = () => {
 							onClick={() => setIsModalOpen(false)}
 							my='2'
 						>
-							<NextLink href={navlink.path} key={idx}>
+							<NextLink href={navlink.path}>
 								{navlink.title}
 							</NextLink>
 						</Text>
