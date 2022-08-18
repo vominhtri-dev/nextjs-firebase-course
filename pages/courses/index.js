@@ -2,8 +2,6 @@ import Head from "next/head"
 import Banner from "../../components/pages/home/Banner"
 import CatelogyTab from "../../components/pages/home/CatelogyTab"
 import CourseSection from "../../components/pages/home/CourseSection"
-import Footer from "../../components/layouts/Footer"
-
 export default function index() {
     return (
         <div>
