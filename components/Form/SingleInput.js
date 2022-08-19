@@ -1,38 +1,18 @@
-import { AddIcon, MinusIcon } from '@chakra-ui/icons'
+import { MinusIcon } from '@chakra-ui/icons'
 import { HStack, IconButton, Input } from '@chakra-ui/react'
-import React, { useState } from 'react'
 
-const SingleInput = ({ textHolder, onValueChange, onValueRemove, id }) => {
-	// const [IsType, setIsType] = useState(false)
-	// const [inputValue, setInputValue] = useState('')
-
-	const handleChageInput = (e) => {
-		// setIsType(e.target.value.trim() !== '')
-		// setInputValue(e.target.value.trim())
-	}
-
-	const AddInput = () => {
-		// handleAddInput({ id, value: inputValue })
-		// handleAddInput({ value: inputValue, id })
-	}
-
-	const RemoveInput = () => {
-		// handleAddInput(['add', id])
+const SingleInput = ({ textHolder, onValueChange, onValueRemove, id, val }) => {
+	const handleChangeInput = (e) => {
+		const value = e.target.value.trim()
+		onValueChange({ id, value })
 	}
 
 	return (
 		<HStack py='2'>
 			<Input
 				placeholder={textHolder || 'Vui lòng điền vào trường này'}
-				onChange={(e) =>
-					onValueChange({ id, value: e.target.value.trim() })
-				}
-			/>
-			<IconButton
-				colorScheme='teal'
-				// disabled={!IsType}
-				icon={<AddIcon />}
-				onClick={AddInput}
+				value={val}
+				onChange={handleChangeInput}
 			/>
 			<IconButton
 				colorScheme='red'

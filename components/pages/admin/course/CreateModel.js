@@ -45,6 +45,7 @@ const CreateModel = () => {
 	const [bannerError, setBannerError] = useState(false)
 	const { categorys, trigger } = useSelector((sta) => sta.adminCategory)
 	const { currentUser } = useSelector((sta) => sta.auth)
+	const [listInclude, setListInclude] = useState([])
 
 	// Get list category
 	useEffect(() => {
@@ -153,6 +154,11 @@ const CreateModel = () => {
 				return
 			}
 
+			// Check List Include course
+			const listIncludeWithOutEmpty = listInclude.filter(
+				(inp) => inp !== ''
+			)
+			// console.log(listIncludeWithOutEmpty)
 			// Image check
 			if (thumbnail === null) setThumbnailError(true)
 			if (banner === null) setBannerError(true)
@@ -216,7 +222,7 @@ const CreateModel = () => {
 				onClose={onClose}
 				isCentered
 				closeOnOverlayClick={false}
-				size='3xl'
+				size='5xl'
 			>
 				<ModalOverlay />
 				<ModalContent pb='4'>
@@ -278,6 +284,8 @@ const CreateModel = () => {
 											<MultibleInput
 												label='Khóa học bao gồm'
 												textHolder='Nhập khóa học bao gồm'
+												inputList={listInclude}
+												setInputList={setListInclude}
 											/>
 										</Box>
 										<Box w='49%' ml='1%'>

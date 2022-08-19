@@ -1,24 +1,12 @@
-import { AddIcon, MinusIcon } from '@chakra-ui/icons'
-import {
-	Button,
-	FormControl,
-	FormLabel,
-	HStack,
-	IconButton,
-	Input,
-} from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import { Button, FormControl, FormLabel } from '@chakra-ui/react'
 import SingleInput from './SingleInput'
 
-const MultibleInput = ({ label }) => {
-	const [inputList, setInputList] = useState([])
-	const [id, setid] = useState(1)
-
+const MultibleInput = ({ label, inputList, setInputList }) => {
 	// on value of the input change
-	const handleValueChange = (data) => {
-		const newData = inputList.map((inp) => {
-			if (inp.id === data.id) {
-				return { ...inp, ...data }
+	const handleValueChange = ({ id, value }) => {
+		const newData = inputList.map((inp, idx) => {
+			if (idx === id) {
+				return value
 			}
 			return inp
 		})
@@ -27,12 +15,15 @@ const MultibleInput = ({ label }) => {
 
 	// Handle add new input
 	const handleAddInput = () => {
-		setid((prev) => prev + 1)
-		setInputList((prev) => [...prev, { id, value: '' }])
+		const isEmpty = inputList.some((inp) => inp === '')
+		if (!isEmpty) {
+			setInputList((prev) => [...prev, ''])
+		}
 	}
+
 	// Handle add new input
 	const handleValueRemove = (valueId) => {
-		const filterValue = inputList.filter((inp) => inp.id !== valueId)
+		const filterValue = inputList.filter((_, idx) => idx !== valueId)
 		setInputList(filterValue)
 	}
 
@@ -40,25 +31,26 @@ const MultibleInput = ({ label }) => {
 		<FormControl>
 			<FormLabel>{label || 'Trường không tên'}</FormLabel>
 
-			{inputList.map((inp, idx) => (
+			{inputList.map((input, idx) => (
 				<SingleInput
 					key={idx}
-					id={inp.id}
+					id={idx}
+					val={input}
 					onValueChange={handleValueChange}
 					onValueRemove={handleValueRemove}
 				/>
 			))}
 			<Button mt='2' size='sm' w='full' onClick={handleAddInput}>
-				Thêm
+				Thêm trường
 			</Button>
-			<Button
+			{/* <Button
 				mt='2'
 				size='sm'
 				w='full'
 				onClick={() => console.log(inputList)}
 			>
 				xem
-			</Button>
+			</Button> */}
 		</FormControl>
 	)
 }
