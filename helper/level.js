@@ -12,4 +12,19 @@ function level(value) {
 	}
 }
 
+export const LIST_LEVEL = [
+	{
+		title: 'Mới bắt đầu',
+		value: 1,
+	},
+	{
+		title: 'Nâng cao',
+		value: 2,
+	},
+	{
+		title: '"Thiếu nhi"',
+		value: 3,
+	},
+]
+
 export default level
