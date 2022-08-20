@@ -16,26 +16,21 @@ import {
     collection,
     doc,
     getDocs,
-    orderBy,
-    query,
     serverTimestamp,
     where,
 } from 'firebase/firestore'
 import { Form, Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { db, storage } from '../../../../firebase.config'
+import { db } from '../../../../firebase.config'
 import CusInput from '../../../Form/CusInput'
 import CusSelect from '../../../Form/CusSelect'
 import { AddIcon } from '@chakra-ui/icons'
 import { LIST_LEVEL } from '../../../../helper/level'
-import { addCategory } from '../../../../redux/slice/adminCategorySlice'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import CusDropFile from '../../../Form/CusDropFile'
 import MultibleInput from '../../../Form/MultibleInput'
 import { getTrigger } from '../../../../redux/slice/adminCourseSlice'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 const slugify = require('slugify')
-import { v4 } from 'uuid'
 import fileUpload from '../../../../helper/fileUpload'
 
 const CreateModel = () => {
@@ -46,31 +41,9 @@ const CreateModel = () => {
     const [banner, setBanner] = useState(null)
     const [thumbnailError, setThumbnailError] = useState(false)
     const [bannerError, setBannerError] = useState(false)
-    const { categorys, trigger } = useSelector((sta) => sta.adminCategory)
+    const { categorys } = useSelector((sta) => sta.adminCategory)
     const { currentUser } = useSelector((sta) => sta.auth)
     const [listInclude, setListInclude] = useState([])
-
-    // Get list category
-    useEffect(() => {
-        async function getAdminCategory() {
-            try {
-                if (categorys.length > 0) return
-                const q = query(
-                    collection(db, 'category'),
-                    orderBy('createdAt', 'desc')
-                )
-                const rawDocs = await getDocs(q)
-                const data = rawDocs.docs.map((doc) => ({
-                    _id: doc.id,
-                    ...doc.data(),
-                }))
-                dispatch(addCategory(data))
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getAdminCategory()
-    }, [trigger, dispatch])
 
     // Init value in form
     const init = {
@@ -250,6 +223,7 @@ const CreateModel = () => {
                 onClose={onClose}
                 isCentered
                 closeOnOverlayClick={false}
+                scrollBehavior='inside'
                 size='5xl'
             >
                 <ModalOverlay />
@@ -337,7 +311,7 @@ const CreateModel = () => {
                                     <Button
                                         mt={4}
                                         w='full'
-                                        colorScheme='green'
+                                        colorScheme='teal'
                                         isLoading={props.isSubmitting}
                                         type='submit'
                                     >

@@ -27,13 +27,19 @@ import {
 import toTimeVn from '../../../../helper/toTimeVn'
 import { BiMessageSquareDetail } from 'react-icons/bi'
 import NextLink from 'next/link'
+import { addCategory } from '../../../../redux/slice/adminCategorySlice'
 
 const CourseTable = () => {
     const { courses, isLoading, trigger } = useSelector(
         (sta) => sta.adminCourse
     )
-    const dispatch = useDispatch()
 
+    const { categorys, trigger: cateTrigger } = useSelector(
+        (sta) => sta.adminCategory
+    )
+
+    const dispatch = useDispatch()
+    // fetch courses
     useEffect(() => {
         async function getAdminCourses() {
             try {
@@ -59,6 +65,28 @@ const CourseTable = () => {
             dispatch(resetLoading())
         }
     }, [trigger, dispatch])
+
+    // fetch categorys
+    useEffect(() => {
+        async function getAdminCategory() {
+            try {
+                if (categorys.length > 0) return
+                const q = query(
+                    collection(db, 'category'),
+                    orderBy('createdAt', 'desc')
+                )
+                const rawDocs = await getDocs(q)
+                const data = rawDocs.docs.map((doc) => ({
+                    _id: doc.id,
+                    ...doc.data(),
+                }))
+                dispatch(addCategory(data))
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getAdminCategory()
+    }, [cateTrigger, dispatch])
 
     return (
         <Box>
@@ -112,7 +140,7 @@ const CourseTable = () => {
                                         </NextLink>
                                         {/* <DetailModel course={course} /> */}
                                         <DeleteModel course={course} />
-                                        {/* <UpdateModel course={course} /> */}
+                                        <UpdateModel course={course} />
                                     </Td>
                                 </Tr>
                             ))}

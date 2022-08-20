@@ -38,7 +38,7 @@ const DetailComponent = () => {
         level,
         totalUsers,
         price,
-        createdAt,
+        updatedAt,
         category,
         include,
     } = courseDetail
@@ -133,7 +133,7 @@ const DetailComponent = () => {
                                     color='yellow.400'
                                     icon={<StarIcon />}
                                 />
-                                <span>{star}</span>
+                                <span>{star || 0}</span>
                             </HStack>
                         </Box>
                     </Flex>
@@ -143,7 +143,7 @@ const DetailComponent = () => {
                             <Text fontWeight='light' color='gray.800'>
                                 Lần cuối cập nhật
                             </Text>
-                            <Text fontWeight='bold'>{toTimeVn(createdAt)}</Text>
+                            <Text fontWeight='bold'>{toTimeVn(updatedAt)}</Text>
                         </GridItem>
                         <GridItem colSpan={['4', '3', '3']}>
                             <Text fontWeight='light' color='gray.800'>
@@ -155,7 +155,7 @@ const DetailComponent = () => {
                             <Text fontWeight='light' color='gray.800'>
                                 Số học viên
                             </Text>
-                            <Text fontWeight='bold'> {totalUsers}</Text>
+                            <Text fontWeight='bold'> {totalUsers || 0}</Text>
                         </GridItem>
                     </Grid>
                     <Box bg='gray.50' p='4' rounded='lg'>
