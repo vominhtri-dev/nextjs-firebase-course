@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     categorys: [],
@@ -7,7 +7,7 @@ const initialState = {
 }
 
 export const adminCategorySlice = createSlice({
-    name: "adminCategory",
+    name: 'adminCategory',
     initialState,
     reducers: {
         addCategory: (state, action) => {
@@ -17,10 +17,14 @@ export const adminCategorySlice = createSlice({
         getTrigger: (state, action) => {
             state.trigger = !state.trigger
         },
+        resetLoading: (state, action) => {
+            state.isLoading = true
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { addCategory, getTrigger } = adminCategorySlice.actions
+export const { addCategory, getTrigger, resetLoading } =
+    adminCategorySlice.actions
 
 export default adminCategorySlice.reducer

@@ -12,18 +12,21 @@ import {
     Tooltip,
     Button,
     Link,
-} from "@chakra-ui/react"
-import { collection, getDocs, orderBy, query } from "firebase/firestore"
-import React, { useEffect } from "react"
-import { db } from "../../../../firebase.config"
-import TdSkeleton from "../TdSkeleton"
-import DeleteModel from "./DeleteModel"
-import UpdateModel from "./UpdateModel"
-import { useDispatch, useSelector } from "react-redux"
-import { addCourses } from "../../../../redux/slice/adminCourseSlice"
-import toTimeVn from "../../../../helper/toTimeVn"
-import { BiMessageSquareDetail } from "react-icons/bi"
-import NextLink from "next/link"
+} from '@chakra-ui/react'
+import { collection, getDocs, orderBy, query } from 'firebase/firestore'
+import React, { useEffect } from 'react'
+import { db } from '../../../../firebase.config'
+import TdSkeleton from '../TdSkeleton'
+import DeleteModel from './DeleteModel'
+import UpdateModel from './UpdateModel'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+    addCourses,
+    resetLoading,
+} from '../../../../redux/slice/adminCourseSlice'
+import toTimeVn from '../../../../helper/toTimeVn'
+import { BiMessageSquareDetail } from 'react-icons/bi'
+import NextLink from 'next/link'
 
 const CourseTable = () => {
     const { courses, isLoading, trigger } = useSelector(
@@ -35,8 +38,8 @@ const CourseTable = () => {
         async function getAdminCourses() {
             try {
                 const q = query(
-                    collection(db, "courses"),
-                    orderBy("createdAt", "desc")
+                    collection(db, 'courses'),
+                    orderBy('createdAt', 'desc')
                 )
                 const rawDocs = await getDocs(q)
 
@@ -51,6 +54,10 @@ const CourseTable = () => {
             }
         }
         getAdminCourses()
+
+        return () => {
+            dispatch(resetLoading())
+        }
     }, [trigger, dispatch])
 
     return (
@@ -75,39 +82,43 @@ const CourseTable = () => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {courses.map((course, idx) => (
-                            <Tr key={course._id}>
-                                <Td>{idx + 1}</Td>
-                                <Td>{course?.title}</Td>
-                                <Td>{course?.price?.value}</Td>
-                                <Td>{toTimeVn(course.createdAt)}</Td>
-                                <Td>
-                                    <NextLink
-                                        href={`/admin/manage-courses/${course?.slug}`}
-                                        passHref
-                                    >
-                                        <Link>
-                                            <Tooltip
-                                                label='Xem chi tiết'
-                                                fontSize='sm'
-                                            >
-                                                <Button
-                                                    size='sm'
-                                                    colorScheme='teal'
-                                                    mr='2'
-                                                    variant='ghost'
+                        {!isLoading &&
+                            courses.map((course, idx) => (
+                                <Tr key={course._id}>
+                                    <Td>{idx + 1}</Td>
+                                    <Td>{course?.title}</Td>
+                                    <Td>{course?.price?.value}</Td>
+                                    <Td>{toTimeVn(course.createdAt)}</Td>
+                                    <Td>
+                                        <NextLink
+                                            href={`/admin/manage-courses/${course?.slug}`}
+                                            passHref
+                                        >
+                                            <Link>
+                                                <Tooltip
+                                                    label='Xem chi tiết'
+                                                    fontSize='sm'
                                                 >
-                                                    <BiMessageSquareDetail />
-                                                </Button>
-                                            </Tooltip>
-                                        </Link>
-                                    </NextLink>
-                                    {/* <DetailModel course={course} /> */}
-                                    {/* <DeleteModel course={course} />
-                                    <UpdateModel course={course} /> */}
-                                </Td>
-                            </Tr>
-                        ))}
+                                                    <Button
+                                                        size='sm'
+                                                        colorScheme='teal'
+                                                        mr='2'
+                                                        variant='ghost'
+                                                    >
+                                                        <BiMessageSquareDetail />
+                                                    </Button>
+                                                </Tooltip>
+                                            </Link>
+                                        </NextLink>
+                                        {/* <DetailModel course={course} /> */}
+                                        <DeleteModel
+                                            id={course._id}
+                                            title={course.title}
+                                        />
+                                        {/* <UpdateModel course={course} /> */}
+                                    </Td>
+                                </Tr>
+                            ))}
 
                         {isLoading && <TdSkeleton col={4} row={10} />}
                     </Tbody>

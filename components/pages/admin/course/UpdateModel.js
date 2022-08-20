@@ -10,21 +10,21 @@ import {
     Button,
     useToast,
     Tooltip,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react'
 import {
     addDoc,
     collection,
     doc,
     serverTimestamp,
     updateDoc,
-} from "firebase/firestore"
-import { Form, Formik } from "formik"
-import { useDispatch } from "react-redux"
-import { db } from "../../../../firebase.config"
-import { getTrigger } from "../../../../redux/slice/categorySlice"
-import CusInput from "../../../Form/CusInput"
-import { EditIcon } from "@chakra-ui/icons"
-const slugify = require("slugify")
+} from 'firebase/firestore'
+import { Form, Formik } from 'formik'
+import { useDispatch } from 'react-redux'
+import { db } from '../../../../firebase.config'
+import { getTrigger } from '../../../../redux/slice/adminCourseSlice'
+import CusInput from '../../../Form/CusInput'
+import { EditIcon } from '@chakra-ui/icons'
+const slugify = require('slugify')
 
 const UpdateModel = ({ cate }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -40,7 +40,7 @@ const UpdateModel = ({ cate }) => {
             validTitle(value) {
                 let error
                 if (!value) {
-                    error = "Tên không được bỏ trống"
+                    error = 'Tên không được bỏ trống'
                 }
                 return error
             },
@@ -51,7 +51,7 @@ const UpdateModel = ({ cate }) => {
     const handleSubmit = async (values, actions) => {
         try {
             const slug = slugify(values.title.toLowerCase())
-            await updateDoc(doc(db, "category", cate._id), {
+            await updateDoc(doc(db, 'category', cate._id), {
                 title: values.title,
                 slug,
                 createdAt: serverTimestamp(),
@@ -59,10 +59,10 @@ const UpdateModel = ({ cate }) => {
 
             dispatch(getTrigger())
             toast({
-                title: "Sửa thành công",
-                status: "success",
+                title: 'Sửa thành công',
+                status: 'success',
                 duration: 2000,
-                position: "top-right",
+                position: 'top-right',
                 isClosable: true,
             })
             actions.resetForm()
@@ -70,11 +70,11 @@ const UpdateModel = ({ cate }) => {
             onClose()
         } catch (error) {
             toast({
-                title: "Sửa thất bại",
+                title: 'Sửa thất bại',
                 description: error.code,
-                status: "error",
+                status: 'error',
                 duration: 2000,
-                position: "top-right",
+                position: 'top-right',
                 isClosable: true,
             })
         }

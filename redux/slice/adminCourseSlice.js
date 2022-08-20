@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     courses: [],
@@ -8,7 +8,7 @@ const initialState = {
 }
 
 export const adminCourseSlice = createSlice({
-    name: "adminCourse",
+    name: 'adminCourse',
     initialState,
     reducers: {
         addCourses: (state, action) => {
@@ -22,11 +22,14 @@ export const adminCourseSlice = createSlice({
         getTrigger: (state, action) => {
             state.trigger = !state.trigger
         },
+        resetLoading: (state, action) => {
+            state.isLoading = true
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { addCourses, addCourseDetail, getTrigger } =
+export const { addCourses, addCourseDetail, getTrigger, resetLoading } =
     adminCourseSlice.actions
 
 export default adminCourseSlice.reducer

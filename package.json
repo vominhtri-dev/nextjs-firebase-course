@@ -23,7 +23,8 @@
     "react-dropzone": "^14.2.2",
     "react-icons": "^4.4.0",
     "react-redux": "^8.0.2",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "8.19.0",

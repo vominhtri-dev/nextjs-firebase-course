@@ -9,15 +9,18 @@ import {
     Box,
     Heading,
     TableCaption,
-} from "@chakra-ui/react"
-import { collection, getDocs, orderBy, query } from "firebase/firestore"
-import React, { useEffect } from "react"
-import { db } from "../../../../firebase.config"
-import TdSkeleton from "../TdSkeleton"
-import DeleteModel from "./DeleteModel"
-import { useDispatch, useSelector } from "react-redux"
-import { addCategory } from "../../../../redux/slice/adminCategorySlice"
-import UpdateModel from "./UpdateModel"
+} from '@chakra-ui/react'
+import { collection, getDocs, orderBy, query } from 'firebase/firestore'
+import React, { useEffect } from 'react'
+import { db } from '../../../../firebase.config'
+import TdSkeleton from '../TdSkeleton'
+import DeleteModel from './DeleteModel'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+    addCategory,
+    resetLoading,
+} from '../../../../redux/slice/adminCategorySlice'
+import UpdateModel from './UpdateModel'
 
 const CategoryTable = () => {
     const { categorys, isLoading, trigger } = useSelector(
@@ -29,8 +32,8 @@ const CategoryTable = () => {
         async function getAdminCategory() {
             try {
                 const q = query(
-                    collection(db, "category"),
-                    orderBy("createdAt", "desc")
+                    collection(db, 'category'),
+                    orderBy('createdAt', 'desc')
                 )
                 const rawDocs = await getDocs(q)
                 const data = rawDocs.docs.map((doc) => ({
@@ -43,6 +46,10 @@ const CategoryTable = () => {
             }
         }
         getAdminCategory()
+
+        return () => {
+            dispatch(resetLoading())
+        }
     }, [trigger, dispatch])
 
     return (
@@ -66,17 +73,18 @@ const CategoryTable = () => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {categorys.map((cate, idx) => (
-                            <Tr key={cate._id}>
-                                <Td>{idx + 1}</Td>
-                                <Td>{cate?.title}</Td>
-                                <Td>{cate?.slug}</Td>
-                                <Td>
-                                    <DeleteModel cate={cate} />
-                                    <UpdateModel cate={cate} />
-                                </Td>
-                            </Tr>
-                        ))}
+                        {!isLoading &&
+                            categorys.map((cate, idx) => (
+                                <Tr key={cate._id}>
+                                    <Td>{idx + 1}</Td>
+                                    <Td>{cate?.title}</Td>
+                                    <Td>{cate?.slug}</Td>
+                                    <Td>
+                                        <DeleteModel cate={cate} />
+                                        <UpdateModel cate={cate} />
+                                    </Td>
+                                </Tr>
+                            ))}
 
                         {isLoading && <TdSkeleton col={4} row={10} />}
                     </Tbody>

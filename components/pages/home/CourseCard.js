@@ -1,7 +1,7 @@
-import { StarIcon, PlusSquareIcon } from "@chakra-ui/icons"
-import NextLink from "next/link"
-import { BsBriefcase, BsHeartFill } from "react-icons/bs"
-import { FaUserFriends } from "react-icons/fa"
+import { StarIcon, PlusSquareIcon } from '@chakra-ui/icons'
+import NextLink from 'next/link'
+import { BsBriefcase, BsHeartFill } from 'react-icons/bs'
+import { FaUserFriends } from 'react-icons/fa'
 
 import {
     Avatar,
@@ -15,28 +15,31 @@ import {
     Stat,
     Button,
     Stack,
-} from "@chakra-ui/react"
-import level from "../../../helper/level"
-import Image from "next/image"
+} from '@chakra-ui/react'
+import { default as levelRender } from '../../../helper/level'
+import Image from 'next/image'
 
 const CourseCard = ({ course, showCatelogy }) => {
+    const { _id, title, thumbnail, writer, star, level, totalUsers, price } =
+        course
+
     return (
         <Box overflow='hidden' bg='white' shadow='md' borderRadius='10px'>
             <Box pos='relative'>
                 <Box w='full' h='200' pos='relative'>
                     <Image
-                        src={course.thumbnail}
+                        src={thumbnail}
                         alt='thumbnail'
                         layout='fill'
                         objectFit='cover'
                         priority='true'
                     />
                 </Box>
-                {showCatelogy && (
+                {/* {showCatelogy && (
                     <Badge pos='absolute' top='4' left='4' colorScheme='green'>
-                        {course.catelogy}
+                        {catelogy}
                     </Badge>
-                )}
+                )} */}
 
                 <Button
                     colorScheme='blackAlpha'
@@ -45,8 +48,12 @@ const CourseCard = ({ course, showCatelogy }) => {
                     bottom='4'
                     px='2'
                 >
-                    <Avatar size='xs' />
-                    <Box ml='2'>{course.writer.name}</Box>
+                    <Avatar
+                        size='xs'
+                        name={writer?.displayName}
+                        src={writer?.photoURL}
+                    />
+                    <Box ml='2'>{writer?.displayName}</Box>
                 </Button>
 
                 <IconButton
@@ -62,15 +69,15 @@ const CourseCard = ({ course, showCatelogy }) => {
             </Box>
 
             <Box p='4'>
-                <NextLink href={`/courses/${course._id}`} passHref>
+                <NextLink href={`/courses/${_id}`} passHref>
                     <Link
                         fontSize='lg'
                         fontWeight='bold'
                         textDecoration='none'
                         transition='0.5s'
-                        _hover={{ color: "messenger.500" }}
+                        _hover={{ color: 'messenger.500' }}
                     >
-                        {course.title}
+                        {title}
                     </Link>
                 </NextLink>
 
@@ -82,7 +89,7 @@ const CourseCard = ({ course, showCatelogy }) => {
                         variant='outline'
                         icon={<BsBriefcase />}
                     />
-                    <span>{level(course.level)}</span>
+                    <span>{levelRender(level)}</span>
                     <IconButton
                         borderRadius='full'
                         size='xs'
@@ -90,7 +97,7 @@ const CourseCard = ({ course, showCatelogy }) => {
                         variant='outline'
                         icon={<FaUserFriends />}
                     />
-                    <span>{course.totalUsers}</span>
+                    <span>{totalUsers || 0}</span>
                     <IconButton
                         borderRadius='full'
                         size='xs'
@@ -99,18 +106,18 @@ const CourseCard = ({ course, showCatelogy }) => {
                         color='yellow.400'
                         icon={<StarIcon />}
                     />
-                    <span>{course.star}</span>
+                    <span>{star || 0}</span>
                 </HStack>
                 <Divider />
-                <Stack mt='2' direction={["column", "row", "row"]}>
+                <Stack mt='2' direction={['column', 'row', 'row']}>
                     <Stat>
-                        <StatNumber>£ {course.price.value}</StatNumber>
+                        <StatNumber>£ {price.value}</StatNumber>
                     </Stat>
                     <Button
                         colorScheme='messenger'
                         variant='ghost'
                         size='sm'
-                        w={["full", "auto"]}
+                        w={['full', 'auto']}
                         leftIcon={<PlusSquareIcon />}
                     >
                         Thêm vào giỏ hàng

@@ -9,15 +9,15 @@ import {
     Tooltip,
     useDisclosure,
     useToast,
-} from "@chakra-ui/react"
-import { deleteDoc, doc } from "firebase/firestore"
-import { useRef } from "react"
-import { db } from "../../../../firebase.config"
-import { useDispatch } from "react-redux"
-import { getTrigger } from "../../../../redux/slice/categorySlice"
-import { DeleteIcon } from "@chakra-ui/icons"
+} from '@chakra-ui/react'
+import { deleteDoc, doc } from 'firebase/firestore'
+import { useRef } from 'react'
+import { db } from '../../../../firebase.config'
+import { useDispatch } from 'react-redux'
+import { getTrigger } from '../../../../redux/slice/adminCourseSlice'
+import { DeleteIcon } from '@chakra-ui/icons'
 
-const DeleteModel = ({ cate }) => {
+const DeleteModel = ({ id, title }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
     const dispatch = useDispatch()
@@ -25,22 +25,22 @@ const DeleteModel = ({ cate }) => {
 
     const handleDelete = async () => {
         try {
-            await deleteDoc(doc(db, "category", cate._id))
+            await deleteDoc(doc(db, 'courses', id))
             dispatch(getTrigger())
             toast({
-                title: "Xóa thành công",
-                status: "success",
+                title: 'Xóa thành công',
+                status: 'success',
                 duration: 2000,
-                position: "top-right",
+                position: 'top-right',
                 isClosable: true,
             })
         } catch (error) {
             toast({
-                title: "Xóa thất bại",
+                title: 'Xóa thất bại',
                 description: error.code,
-                status: "error",
+                status: 'error',
                 duration: 2000,
-                position: "top-right",
+                position: 'top-right',
                 isClosable: true,
             })
         }
@@ -66,7 +66,7 @@ const DeleteModel = ({ cate }) => {
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                            Xóa danh mục {cate.title}
+                            Xóa khóa học {title}
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
