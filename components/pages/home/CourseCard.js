@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { default as levelRender } from '../../../helper/level'
 import Image from 'next/image'
+import renderByLine from '../../../helper/renderByLine'
 
 const CourseCard = ({ course, showCatelogy }) => {
     const { _id, title, thumbnail, writer, star, level, totalUsers, price } =
@@ -111,7 +112,9 @@ const CourseCard = ({ course, showCatelogy }) => {
                 <Divider />
                 <Stack mt='2' direction={['column', 'row', 'row']}>
                     <Stat>
-                        <StatNumber>£ {price.value}</StatNumber>
+                        <StatNumber title={price.value}>
+                            £ {price.value && renderByLine(price.value, 6)}
+                        </StatNumber>
                     </Stat>
                     <Button
                         colorScheme='messenger'
@@ -120,7 +123,7 @@ const CourseCard = ({ course, showCatelogy }) => {
                         w={['full', 'auto']}
                         leftIcon={<PlusSquareIcon />}
                     >
-                        Thêm vào giỏ hàng
+                        Thêm giỏ hàng
                     </Button>
                 </Stack>
             </Box>

@@ -111,10 +111,7 @@ const CourseTable = () => {
                                             </Link>
                                         </NextLink>
                                         {/* <DetailModel course={course} /> */}
-                                        <DeleteModel
-                                            id={course._id}
-                                            title={course.title}
-                                        />
+                                        <DeleteModel course={course} />
                                         {/* <UpdateModel course={course} /> */}
                                     </Td>
                                 </Tr>
