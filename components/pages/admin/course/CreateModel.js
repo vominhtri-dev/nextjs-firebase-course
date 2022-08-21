@@ -16,6 +16,7 @@ import {
     collection,
     doc,
     getDocs,
+    query,
     serverTimestamp,
     where,
 } from 'firebase/firestore'
@@ -30,8 +31,8 @@ import { useState } from 'react'
 import CusDropFile from '../../../Form/CusDropFile'
 import MultibleInput from '../../../Form/MultibleInput'
 import { getTrigger } from '../../../../redux/slice/adminCourseSlice'
-const slugify = require('slugify')
 import fileUpload from '../../../../helper/fileUpload'
+const slugify = require('slugify')
 
 const CreateModel = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -79,7 +80,7 @@ const CreateModel = () => {
             },
             validPriceValue(value) {
                 let error
-                if (!value) {
+                if (!value && value !== 0) {
                     error = 'Giá tiền không được bỏ trống'
                 }
 
@@ -139,7 +140,6 @@ const CreateModel = () => {
             const listIncludeWithOutEmpty = listInclude.filter(
                 (inp) => inp !== ''
             )
-            // console.log(listIncludeWithOutEmpty)
             // Image check
             if (thumbnail === null) setThumbnailError(true)
             if (banner === null) setBannerError(true)
@@ -160,6 +160,7 @@ const CreateModel = () => {
                     price: {
                         value: values.priceValue,
                     },
+                    view: 0,
                     writer: {
                         displayName,
                         uid,
@@ -172,6 +173,7 @@ const CreateModel = () => {
                     updatedAt: serverTimestamp(),
                 })
 
+                // Reset
                 dispatch(getTrigger())
                 toast({
                     title: 'Tạo thành công',
@@ -182,6 +184,7 @@ const CreateModel = () => {
                 })
                 actions.resetForm()
                 actions.setSubmitting(false)
+                setListInclude([])
                 onClose()
             }
         } catch (error) {

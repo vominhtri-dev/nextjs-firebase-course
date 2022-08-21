@@ -3,31 +3,38 @@ import {
     Container,
     Grid,
     GridItem,
-    Button,
     Text,
     Spacer,
     Stack,
-    SkeletonCircle,
-    SkeletonText,
 } from '@chakra-ui/react'
 import CoursePagi from './CoursePagi'
 import CourseCard from './CourseCard'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, orderBy, query } from 'firebase/firestore'
 import { db } from '../../../firebase.config'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import CourseCardSkeleton from './CourseCardSkeleton'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCourse } from '../../../redux/slice/courseSlice'
 
 export default function CourseSection() {
-    const [courses, setCourses] = useState([])
+    const { courses, trigger, isLoading } = useSelector((sta) => sta.course)
+    const dispatch = useDispatch()
+
     useEffect(() => {
         async function getCourses() {
-            const rawDos = await getDocs(collection(db, 'courses'))
-            setCourses(
-                rawDos.docs.map((doc) => ({ _id: doc.id, ...doc.data() }))
+            const q = query(
+                collection(db, 'courses'),
+                orderBy('createdAt', 'desc')
+            )
+            const rawDocs = await getDocs(q)
+            dispatch(
+                addCourse(
+                    rawDocs.docs.map((doc) => ({ _id: doc.id, ...doc.data() }))
+                )
             )
         }
         getCourses()
-    }, [])
+    }, [trigger, dispatch])
 
     return (
         <Box pb='4' pt='8'>
@@ -62,7 +69,7 @@ export default function CourseSection() {
                             </GridItem>
                         ))}
                     {/* Load skeleton */}
-                    {courses.length <= 0 &&
+                    {isLoading &&
                         Array.from(Array(6).keys()).map((item) => (
                             <GridItem key={item}>
                                 <CourseCardSkeleton />

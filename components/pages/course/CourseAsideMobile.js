@@ -1,42 +1,34 @@
-import { StarIcon } from "@chakra-ui/icons"
+import { StarIcon } from '@chakra-ui/icons'
 import {
     Avatar,
     Badge,
     Box,
     Button,
-    ButtonGroup,
-    Container,
     Divider,
     HStack,
     List,
     ListIcon,
     ListItem,
-    Stack,
     Stat,
     StatHelpText,
     StatNumber,
     Text,
-} from "@chakra-ui/react"
-import React from "react"
-import { AiOutlineShoppingCart } from "react-icons/ai"
-import { BsBook } from "react-icons/bs"
-import { HiOutlineTicket } from "react-icons/hi"
-import { MdCheckCircle } from "react-icons/md"
+} from '@chakra-ui/react'
+import React from 'react'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { BsBook } from 'react-icons/bs'
+import { HiOutlineTicket } from 'react-icons/hi'
+import { MdCheckCircle } from 'react-icons/md'
+import { useSelector } from 'react-redux'
 
 export default function CourseAsideMobile() {
-    const courseFeature = [
-        "Trình độ trung bình",
-        "Tổng số 28 bài học",
-        "Thời lượng 08 giờ 02 phút",
-        "Học mọi lúc, mọi nơi",
-        "50 bài tải xuống",
-        "Không giới hạn lược tải",
-    ]
+    const { courseDetail } = useSelector((sta) => sta.course)
+    const { writer, price, include, star } = courseDetail
     return (
-        <Box display={["block", "block", "none"]}>
+        <Box display={['block', 'block', 'none']}>
             <Divider />
             <Stat>
-                <StatNumber>Giá : £ 100</StatNumber>
+                <StatNumber>Giá : £ {price.value}</StatNumber>
                 <StatHelpText display='flex' alignItems='center'>
                     <strike>£ 150</strike>
                     <Badge colorScheme='green' ml='4'>
@@ -67,12 +59,13 @@ export default function CourseAsideMobile() {
                 Khóa học này bao gồm
             </Text>
             <List spacing={3}>
-                {courseFeature.map((courseFea, idx) => (
-                    <ListItem key={idx}>
-                        <ListIcon as={MdCheckCircle} color='green.500' />
-                        {courseFea}
-                    </ListItem>
-                ))}
+                {include &&
+                    include.map((courseFea, idx) => (
+                        <ListItem key={idx}>
+                            <ListIcon as={MdCheckCircle} color='green.500' />
+                            {courseFea}
+                        </ListItem>
+                    ))}
             </List>
             <Divider py='2' />
             <Box mb='8'>
@@ -80,13 +73,18 @@ export default function CourseAsideMobile() {
                     Người hướng dẫn
                 </Text>
                 <HStack>
-                    <Avatar size='sm' mr='2' />
+                    <Avatar
+                        name={writer?.displayName}
+                        src={writer?.photoURL}
+                        size='sm'
+                        mr='2'
+                    />
                     <Box>
                         <Text fontWeight='bold' fontSize='sm' my='2'>
-                            Mr Homelander
+                            {writer?.displayName}
                         </Text>
                         <Text my='2' fontSize='xs'>
-                            Leader of the Seven
+                            Admin
                         </Text>
                     </Box>
                 </HStack>
@@ -97,7 +95,7 @@ export default function CourseAsideMobile() {
                     justify='space-between'
                 >
                     <HStack>
-                        <Text fontSize='xs'>5.0</Text>
+                        <Text fontSize='xs'>{star || 0}</Text>
                         <StarIcon color='yellow.400' fontSize='xs' />
                         <StarIcon color='yellow.400' fontSize='xs' />
                         <StarIcon color='yellow.400' fontSize='xs' />

@@ -2,11 +2,11 @@ import { StarIcon, PlusSquareIcon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
 import { BsBriefcase, BsHeartFill } from 'react-icons/bs'
 import { FaUserFriends } from 'react-icons/fa'
+import { AiFillEye } from 'react-icons/ai'
 
 import {
     Avatar,
     Box,
-    Badge,
     Link,
     IconButton,
     HStack,
@@ -15,14 +15,24 @@ import {
     Stat,
     Button,
     Stack,
+    Tooltip,
 } from '@chakra-ui/react'
 import { default as levelRender } from '../../../helper/level'
 import Image from 'next/image'
 import renderByLine from '../../../helper/renderByLine'
 
-const CourseCard = ({ course, showCatelogy }) => {
-    const { _id, title, thumbnail, writer, star, level, totalUsers, price } =
-        course
+const CourseCard = ({ course }) => {
+    const {
+        slug,
+        title,
+        thumbnail,
+        writer,
+        star,
+        level,
+        totalUsers,
+        price,
+        view,
+    } = course
 
     return (
         <Box overflow='hidden' bg='white' shadow='md' borderRadius='10px'>
@@ -36,11 +46,6 @@ const CourseCard = ({ course, showCatelogy }) => {
                         priority='true'
                     />
                 </Box>
-                {/* {showCatelogy && (
-                    <Badge pos='absolute' top='4' left='4' colorScheme='green'>
-                        {catelogy}
-                    </Badge>
-                )} */}
 
                 <Button
                     colorScheme='blackAlpha'
@@ -70,44 +75,66 @@ const CourseCard = ({ course, showCatelogy }) => {
             </Box>
 
             <Box p='4'>
-                <NextLink href={`/courses/${_id}`} passHref>
-                    <Link
-                        fontSize='lg'
-                        fontWeight='bold'
-                        textDecoration='none'
-                        transition='0.5s'
-                        _hover={{ color: 'messenger.500' }}
-                    >
-                        {title}
-                    </Link>
-                </NextLink>
+                <Box minH='60px'>
+                    <NextLink href={`/courses/${slug}`} passHref>
+                        <Link
+                            fontSize='lg'
+                            fontWeight='bold'
+                            textDecoration='none'
+                            transition='0.5s'
+                            _hover={{ color: 'messenger.500' }}
+                            title={title}
+                        >
+                            {renderByLine(title, 60)}
+                        </Link>
+                    </NextLink>
+                </Box>
 
-                <HStack py='4'>
-                    <IconButton
-                        borderRadius='full'
-                        size='xs'
-                        aria-label='lever'
-                        variant='outline'
-                        icon={<BsBriefcase />}
-                    />
-                    <span>{levelRender(level)}</span>
-                    <IconButton
-                        borderRadius='full'
-                        size='xs'
-                        aria-label='lever'
-                        variant='outline'
-                        icon={<FaUserFriends />}
-                    />
+                <HStack my='2'>
+                    <Tooltip label='Tổng học viên' fontSize='md'>
+                        <IconButton
+                            borderRadius='full'
+                            size='xs'
+                            aria-label='lever'
+                            variant='outline'
+                            icon={<FaUserFriends />}
+                        />
+                    </Tooltip>
                     <span>{totalUsers || 0}</span>
-                    <IconButton
-                        borderRadius='full'
-                        size='xs'
-                        aria-label='lever'
-                        variant='outline'
-                        color='yellow.400'
-                        icon={<StarIcon />}
-                    />
+                    <Tooltip label='Tổng lược đánh giá' fontSize='md'>
+                        <IconButton
+                            borderRadius='full'
+                            size='xs'
+                            aria-label='lever'
+                            variant='outline'
+                            color='yellow.400'
+                            icon={<StarIcon />}
+                        />
+                    </Tooltip>
                     <span>{star || 0}</span>
+                    <Tooltip label='Tổng lược xem' fontSize='md'>
+                        <IconButton
+                            borderRadius='full'
+                            size='xs'
+                            aria-label='lever'
+                            variant='outline'
+                            color='green.400'
+                            icon={<AiFillEye />}
+                        />
+                    </Tooltip>
+                    <span>{view || 0}</span>
+                </HStack>
+                <HStack my='2'>
+                    <Tooltip label='Trình độ' fontSize='md'>
+                        <IconButton
+                            borderRadius='full'
+                            size='xs'
+                            aria-label='lever'
+                            variant='outline'
+                            icon={<BsBriefcase />}
+                        />
+                    </Tooltip>
+                    <span>{levelRender(level)}</span>
                 </HStack>
                 <Divider />
                 <Stack mt='2' direction={['column', 'row', 'row']}>

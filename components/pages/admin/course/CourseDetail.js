@@ -16,6 +16,7 @@ import {
     StatHelpText,
     StatNumber,
     Text,
+    Tooltip,
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { default as levelRender } from '../../../../helper/level'
@@ -25,6 +26,7 @@ import { StarIcon } from '@chakra-ui/icons'
 import toTimeVn from '../../../../helper/toTimeVn'
 import { useSelector } from 'react-redux'
 import { MdCheckCircle } from 'react-icons/md'
+import { AiFillEye } from 'react-icons/ai'
 import CourseTab from './CourseTab'
 
 const DetailComponent = () => {
@@ -34,6 +36,7 @@ const DetailComponent = () => {
         thumbnail,
         writer,
         star,
+        view,
         banner,
         level,
         totalUsers,
@@ -109,31 +112,54 @@ const DetailComponent = () => {
                             </HStack>
 
                             <HStack>
-                                <IconButton
-                                    borderRadius='full'
-                                    size='xs'
-                                    aria-label='lever'
-                                    variant='outline'
-                                    icon={<BsBriefcase />}
-                                />
+                                <Tooltip label='Trình độ' fontSize='md'>
+                                    <IconButton
+                                        borderRadius='full'
+                                        size='xs'
+                                        aria-label='lever'
+                                        variant='outline'
+                                        icon={<BsBriefcase />}
+                                    />
+                                </Tooltip>
+
                                 <span>{levelRender(level)}</span>
-                                <IconButton
-                                    borderRadius='full'
-                                    size='xs'
-                                    aria-label='lever'
-                                    variant='outline'
-                                    icon={<FaUserFriends />}
-                                />
+
+                                <Tooltip label='Tổng học viên' fontSize='md'>
+                                    <IconButton
+                                        borderRadius='full'
+                                        size='xs'
+                                        aria-label='lever'
+                                        variant='outline'
+                                        icon={<FaUserFriends />}
+                                    />
+                                </Tooltip>
                                 <span>{totalUsers}</span>
-                                <IconButton
-                                    borderRadius='full'
-                                    size='xs'
-                                    aria-label='lever'
-                                    variant='outline'
-                                    color='yellow.400'
-                                    icon={<StarIcon />}
-                                />
+                                <Tooltip
+                                    label='Tổng lược đánh giá'
+                                    fontSize='md'
+                                >
+                                    <IconButton
+                                        borderRadius='full'
+                                        size='xs'
+                                        aria-label='lever'
+                                        variant='outline'
+                                        color='yellow.400'
+                                        icon={<StarIcon />}
+                                    />
+                                </Tooltip>
+
                                 <span>{star || 0}</span>
+                                <Tooltip label='Tổng lược xem' fontSize='md'>
+                                    <IconButton
+                                        borderRadius='full'
+                                        size='xs'
+                                        aria-label='lever'
+                                        variant='outline'
+                                        color='green.400'
+                                        icon={<AiFillEye />}
+                                    />
+                                </Tooltip>
+                                <span>{view}</span>
                             </HStack>
                         </Box>
                     </Flex>

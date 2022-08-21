@@ -1,18 +1,18 @@
-import { collection, getDoc, where, query, getDocs } from "firebase/firestore"
-import Head from "next/head"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import AdminLayout from "../../../components/layouts/admin/AdminLayout"
-import Heading from "../../../components/pages/admin/Heading"
-import { useRouter } from "next/router"
-import { db } from "../../../firebase.config"
-import { addCourseDetail } from "../../../redux/slice/adminCourseSlice"
-import CourseDetail from "../../../components/pages/admin/course/CourseDetail"
+import { collection, getDoc, where, query, getDocs } from 'firebase/firestore'
+import Head from 'next/head'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import AdminLayout from '../../../components/layouts/admin/AdminLayout'
+import Heading from '../../../components/pages/admin/Heading'
+import { useRouter } from 'next/router'
+import { db } from '../../../firebase.config'
+import { addCourseDetail } from '../../../redux/slice/adminCourseSlice'
+import CourseDetail from '../../../components/pages/admin/course/CourseDetail'
 
 function Course() {
     const { trigger } = useSelector((sta) => sta.adminCourse)
     const dispatch = useDispatch()
-
+    const [title, setTitle] = useState('')
     const router = useRouter()
 
     useEffect(() => {
@@ -20,8 +20,8 @@ function Course() {
             try {
                 const slug = router.query.id
                 const q = query(
-                    collection(db, "courses"),
-                    where("slug", "==", slug)
+                    collection(db, 'courses'),
+                    where('slug', '==', slug)
                 )
                 const result = await getDocs(q)
                 if (result.docs.length > 0) {
@@ -31,6 +31,7 @@ function Course() {
                     await getDoc(categoryRef).then((cate) => {
                         courseDoc.category = { ...cate.data() }
                     })
+                    setTitle(courseDoc.title)
                     dispatch(addCourseDetail(courseDoc))
                 }
             } catch (error) {
@@ -44,8 +45,8 @@ function Course() {
         <>
             <Head>
                 <title>
-                    Khóa học | Tridev.io - Học lập trình miễn phí | Học lập
-                    trình cho người mới
+                    {title || 'Đang tải'} | Tridev.io - Học lập trình miễn phí |
+                    Học lập trình cho người mới
                 </title>
                 <meta
                     name='description'

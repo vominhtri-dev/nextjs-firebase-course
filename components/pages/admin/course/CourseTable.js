@@ -13,8 +13,15 @@ import {
     Button,
     Link,
 } from '@chakra-ui/react'
-import { collection, getDocs, orderBy, query } from 'firebase/firestore'
-import React, { useEffect } from 'react'
+import {
+    collection,
+    getDocs,
+    limit,
+    orderBy,
+    query,
+    startAt,
+} from 'firebase/firestore'
+import React, { useEffect, useRef, useState } from 'react'
 import { db } from '../../../../firebase.config'
 import TdSkeleton from '../TdSkeleton'
 import DeleteModel from './DeleteModel'
@@ -28,17 +35,31 @@ import toTimeVn from '../../../../helper/toTimeVn'
 import { BiMessageSquareDetail } from 'react-icons/bi'
 import NextLink from 'next/link'
 import { addCategory } from '../../../../redux/slice/adminCategorySlice'
+import renderByLine from '../../../../helper/renderByLine'
+import Pagination from '../../../Pagination'
+import usePagi from '../../../../hook/usePagi'
 
 const CourseTable = () => {
+    const dispatch = useDispatch()
     const { courses, isLoading, trigger } = useSelector(
         (sta) => sta.adminCourse
     )
-
     const { categorys, trigger: cateTrigger } = useSelector(
         (sta) => sta.adminCategory
     )
 
-    const dispatch = useDispatch()
+    const {
+        list,
+        currentPage,
+        setCurrentPage,
+        pageSize,
+        changePrevPage,
+        changeNextPage,
+    } = usePagi({
+        sizePageValue: 5,
+        listData: courses,
+    })
+
     // fetch courses
     useEffect(() => {
         async function getAdminCourses() {
@@ -49,12 +70,11 @@ const CourseTable = () => {
                 )
                 const rawDocs = await getDocs(q)
 
-                const courses = rawDocs.docs.map((doc) => ({
+                const listCourse = rawDocs.docs.map((doc) => ({
                     _id: doc.id,
                     ...doc.data(),
                 }))
-
-                dispatch(addCourses(courses))
+                dispatch(addCourses(listCourse))
             } catch (error) {
                 console.log(error)
             }
@@ -88,6 +108,9 @@ const CourseTable = () => {
         getAdminCategory()
     }, [cateTrigger, dispatch])
 
+    // handle chose page
+    const handleChosePage = (numPage) => setCurrentPage(numPage)
+
     return (
         <Box>
             <Heading mb='4' as='h5' size='md'>
@@ -111,10 +134,12 @@ const CourseTable = () => {
                     </Thead>
                     <Tbody>
                         {!isLoading &&
-                            courses.map((course, idx) => (
+                            list.map((course, idx) => (
                                 <Tr key={course._id}>
                                     <Td>{idx + 1}</Td>
-                                    <Td>{course?.title}</Td>
+                                    <Td title={course?.title}>
+                                        {renderByLine(course?.title, 50)}
+                                    </Td>
                                     <Td>{course?.price?.value}</Td>
                                     <Td>{toTimeVn(course.createdAt)}</Td>
                                     <Td>
@@ -145,10 +170,18 @@ const CourseTable = () => {
                                 </Tr>
                             ))}
 
-                        {isLoading && <TdSkeleton col={4} row={10} />}
+                        {isLoading && <TdSkeleton col={5} row={pageSize} />}
                     </Tbody>
                 </Table>
             </TableContainer>
+            <Pagination
+                pageSize={pageSize}
+                pageLength={courses.length}
+                currentPage={currentPage}
+                onNextPage={changeNextPage}
+                onPrevPage={changePrevPage}
+                onChosePage={handleChosePage}
+            />
         </Box>
     )
 }

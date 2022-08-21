@@ -12,16 +12,7 @@ import {
     Flex,
     Tooltip,
 } from '@chakra-ui/react'
-import {
-    addDoc,
-    collection,
-    doc,
-    getDocs,
-    query,
-    serverTimestamp,
-    updateDoc,
-    where,
-} from 'firebase/firestore'
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { Form, Formik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { db } from '../../../../firebase.config'
@@ -94,7 +85,7 @@ const UpdateModel = ({ course }) => {
             },
             validPriceValue(value) {
                 let error
-                if (!value) {
+                if (!value && value !== 0) {
                     error = 'Giá tiền không được bỏ trống'
                 }
 
