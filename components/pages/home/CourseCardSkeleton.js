@@ -1,16 +1,26 @@
-import { Box, Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
-import React from 'react'
+import { Box, GridItem, Skeleton, SkeletonText } from '@chakra-ui/react'
 
-const CourseCardSkeleton = () => {
-	return (
-		<Box bg='white' shadow='md' borderRadius='10px' overflow='hidden'>
-			<Skeleton height='200' />
+const CourseCardSkeleton = ({ num }) => {
+    return (
+        <>
+            {[...Array(num).keys()].map((_, idx) => (
+                <GridItem key={idx}>
+                    <Box
+                        bg='white'
+                        shadow='md'
+                        borderRadius='10px'
+                        overflow='hidden'
+                    >
+                        <Skeleton height='200' />
 
-			<Box p='4' pb='8'>
-				<SkeletonText mt='4' noOfLines={3} spacing='4' />
-			</Box>
-		</Box>
-	)
+                        <Box p='4' pb='8'>
+                            <SkeletonText mt='4' noOfLines={3} spacing='4' />
+                        </Box>
+                    </Box>
+                </GridItem>
+            ))}
+        </>
+    )
 }
 
 export default CourseCardSkeleton

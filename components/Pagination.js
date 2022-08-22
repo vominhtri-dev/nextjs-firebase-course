@@ -17,9 +17,7 @@ const Pagination = ({
     return (
         <Flex py='4' direction={['column', 'row']}>
             <Box>
-                <Text>
-                    Đang hiện {pageSize} trong số {pageLength} kết quả
-                </Text>
+                <Text>Có tất cả {pageLength} kết quả</Text>
             </Box>
             <Spacer />
             <Box mt={['4', 0]}>

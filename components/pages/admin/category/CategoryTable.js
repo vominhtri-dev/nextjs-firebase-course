@@ -21,13 +21,27 @@ import {
     resetLoading,
 } from '../../../../redux/slice/adminCategorySlice'
 import UpdateModel from './UpdateModel'
+import Pagination from '../../../Pagination'
+import usePagi from '../../../../hook/usePagi'
 
 const CategoryTable = () => {
     const { categorys, isLoading, trigger } = useSelector(
         (sta) => sta.adminCategory
     )
+    const {
+        list,
+        currentPage,
+        pageSize,
+        changePrevPage,
+        changeNextPage,
+        chagePage,
+    } = usePagi({
+        sizePageValue: 5,
+        listData: categorys,
+    })
     const dispatch = useDispatch()
 
+    // fetch admin category
     useEffect(() => {
         async function getAdminCategory() {
             try {
@@ -57,7 +71,6 @@ const CategoryTable = () => {
             <Heading mb='4' as='h5' size='md'>
                 Danh sách danh mục
             </Heading>
-
             <TableContainer>
                 <Table variant='simple'>
                     {categorys.length === 0 && !isLoading && (
@@ -74,7 +87,7 @@ const CategoryTable = () => {
                     </Thead>
                     <Tbody>
                         {!isLoading &&
-                            categorys.map((cate, idx) => (
+                            list.map((cate, idx) => (
                                 <Tr key={cate._id}>
                                     <Td>{idx + 1}</Td>
                                     <Td>{cate?.title}</Td>
@@ -86,10 +99,20 @@ const CategoryTable = () => {
                                 </Tr>
                             ))}
 
-                        {isLoading && <TdSkeleton col={4} row={10} />}
+                        {isLoading && <TdSkeleton col={4} row={5} />}
                     </Tbody>
                 </Table>
             </TableContainer>
+
+            {/* Pagination */}
+            <Pagination
+                pageSize={pageSize}
+                pageLength={categorys.length}
+                currentPage={currentPage}
+                onNextPage={changeNextPage}
+                onPrevPage={changePrevPage}
+                onChosePage={chagePage}
+            />
         </Box>
     )
 }

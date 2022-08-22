@@ -16,6 +16,7 @@ import {
     Button,
     Stack,
     Tooltip,
+    Text,
 } from '@chakra-ui/react'
 import { default as levelRender } from '../../../helper/level'
 import Image from 'next/image'
@@ -43,7 +44,8 @@ const CourseCard = ({ course }) => {
                         alt='thumbnail'
                         layout='fill'
                         objectFit='cover'
-                        priority='true'
+                        priority='low'
+                        // priority='true'
                     />
                 </Box>
 
@@ -59,7 +61,14 @@ const CourseCard = ({ course }) => {
                         name={writer?.displayName}
                         src={writer?.photoURL}
                     />
-                    <Box ml='2'>{writer?.displayName}</Box>
+                    <Box ml='2' textAlign='left'>
+                        <Text fontSize='sm' my='1'>
+                            {writer?.displayName}
+                        </Text>
+                        <Text fontSize='xx-small' my='1'>
+                            Quản trị viên
+                        </Text>
+                    </Box>
                 </Button>
 
                 <IconButton

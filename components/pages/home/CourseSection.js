@@ -7,19 +7,32 @@ import {
     Spacer,
     Stack,
 } from '@chakra-ui/react'
-import CoursePagi from './CoursePagi'
 import CourseCard from './CourseCard'
 import { collection, getDocs, orderBy, query } from 'firebase/firestore'
 import { db } from '../../../firebase.config'
 import { useEffect } from 'react'
 import CourseCardSkeleton from './CourseCardSkeleton'
 import { useDispatch, useSelector } from 'react-redux'
-import { addCourse } from '../../../redux/slice/courseSlice'
+import { addCourse, resetLoading } from '../../../redux/slice/courseSlice'
+import Pagination from '../../Pagination'
+import usePagi from '../../../hook/usePagi'
 
 export default function CourseSection() {
     const { courses, trigger, isLoading } = useSelector((sta) => sta.course)
     const dispatch = useDispatch()
+    const {
+        list,
+        currentPage,
+        pageSize,
+        changePrevPage,
+        changeNextPage,
+        chagePage,
+    } = usePagi({
+        sizePageValue: 6,
+        listData: courses,
+    })
 
+    // fetch course
     useEffect(() => {
         async function getCourses() {
             const q = query(
@@ -34,6 +47,9 @@ export default function CourseSection() {
             )
         }
         getCourses()
+        return () => {
+            dispatch(resetLoading())
+        }
     }, [trigger, dispatch])
 
     return (
@@ -55,28 +71,31 @@ export default function CourseSection() {
                 <Grid
                     templateColumns={[
                         'repeat(1, 1fr)',
-                        'repeat(1, 1fr)',
+                        'repeat(2, 1fr)',
                         'repeat(2, 1fr)',
                         'repeat(3, 1fr)',
                     ]}
                     gap='4'
                 >
                     {/* Data fetching */}
-                    {courses.length > 0 &&
-                        courses.map((course) => (
+                    {!isLoading &&
+                        list.map((course) => (
                             <GridItem key={course._id}>
                                 <CourseCard course={course} />
                             </GridItem>
                         ))}
                     {/* Load skeleton */}
-                    {isLoading &&
-                        Array.from(Array(6).keys()).map((item) => (
-                            <GridItem key={item}>
-                                <CourseCardSkeleton />
-                            </GridItem>
-                        ))}
+                    {isLoading && <CourseCardSkeleton num={6} />}
                 </Grid>
-                <CoursePagi />
+                {/* Pagination */}
+                <Pagination
+                    pageSize={pageSize}
+                    pageLength={courses.length}
+                    currentPage={currentPage}
+                    onNextPage={changeNextPage}
+                    onPrevPage={changePrevPage}
+                    onChosePage={chagePage}
+                />
             </Container>
         </Box>
     )

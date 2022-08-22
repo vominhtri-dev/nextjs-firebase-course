@@ -53,6 +53,7 @@ const CourseTable = () => {
         currentPage,
         setCurrentPage,
         pageSize,
+        chagePage,
         changePrevPage,
         changeNextPage,
     } = usePagi({
@@ -108,15 +109,11 @@ const CourseTable = () => {
         getAdminCategory()
     }, [cateTrigger, dispatch])
 
-    // handle chose page
-    const handleChosePage = (numPage) => setCurrentPage(numPage)
-
     return (
         <Box>
             <Heading mb='4' as='h5' size='md'>
                 Danh sách khóa học
             </Heading>
-
             <TableContainer>
                 <Table variant='simple'>
                     {courses.length === 0 && !isLoading && (
@@ -174,13 +171,14 @@ const CourseTable = () => {
                     </Tbody>
                 </Table>
             </TableContainer>
+            {/* // Pagination */}
             <Pagination
                 pageSize={pageSize}
                 pageLength={courses.length}
                 currentPage={currentPage}
                 onNextPage={changeNextPage}
                 onPrevPage={changePrevPage}
-                onChosePage={handleChosePage}
+                onChosePage={chagePage}
             />
         </Box>
     )

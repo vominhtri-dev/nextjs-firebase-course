@@ -1,7 +1,7 @@
-import Head from "next/head"
-import Banner from "../../components/pages/home/Banner"
-import CatelogyTab from "../../components/pages/home/CatelogyTab"
-import CourseSection from "../../components/pages/home/CourseSection"
+import Head from 'next/head'
+import Banner from '../../components/pages/home/Banner'
+import CategoryTab from '../../components/pages/home/CategoryTab'
+import CourseSection from '../../components/pages/home/CourseSection'
 export default function index() {
     return (
         <div>
@@ -25,7 +25,7 @@ export default function index() {
                 ctaText='Học ngay nào'
             />
 
-            <CatelogyTab />
+            <CategoryTab />
             <CourseSection />
         </div>
     )

@@ -26,11 +26,19 @@ export const courseSlice = createSlice({
         resetLoadingDetail: (state) => {
             state.isLoadingDetail = true
         },
+        resetLoading: (state) => {
+            state.isLoading = true
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { addCourse, getTrigger, addCourseDetail, resetLoadingDetail } =
-    courseSlice.actions
+export const {
+    addCourse,
+    getTrigger,
+    addCourseDetail,
+    resetLoadingDetail,
+    resetLoading,
+} = courseSlice.actions
 
 export default courseSlice.reducer

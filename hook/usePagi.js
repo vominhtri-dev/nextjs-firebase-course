@@ -23,11 +23,16 @@ const usePagi = ({ sizePageValue, currentPageValue = 1, listData }) => {
         }
     }
 
+    const chagePage = (pageNum) => {
+        setCurrentPage(pageNum)
+    }
+
     return {
         list,
         setList,
         pageSize: sizePageValue,
         currentPage,
+        chagePage,
         setCurrentPage,
         changePrevPage,
         changeNextPage,

@@ -1,9 +1,9 @@
-import Head from "next/head"
-import Banner from "../components/pages/home/Banner"
-import CatelogySection from "../components/pages/home/CatelogySection"
-import CatelogyTab from "../components/pages/home/CatelogyTab"
-import CourseSection from "../components/pages/home/CourseSection"
-import FeatureSection from "../components/pages/home/FeatureSection"
+import Head from 'next/head'
+import Banner from '../components/pages/home/Banner'
+import CategorySection from '../components/pages/home/CategorySection'
+import CategoryTab from '../components/pages/home/CategoryTab'
+import CourseSection from '../components/pages/home/CourseSection'
+import FeatureSection from '../components/pages/home/FeatureSection'
 
 export default function Home() {
     return (
@@ -28,10 +28,10 @@ export default function Home() {
                 miễn phí.'
                 ctaText='Học ngay nào'
             />
-            <CatelogyTab />
+            <CategoryTab />
             <CourseSection />
             <FeatureSection />
-            <CatelogySection />
+            <CategorySection />
         </div>
     )
 }

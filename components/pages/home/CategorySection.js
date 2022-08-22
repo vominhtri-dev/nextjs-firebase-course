@@ -6,35 +6,35 @@ import {
     GridItem,
     IconButton,
     Text,
-} from "@chakra-ui/react"
-import { AiFillHtml5, AiFillMobile } from "react-icons/ai"
-import { BsFillTerminalFill, BsFillHddNetworkFill } from "react-icons/bs"
-import { DiJavascript1 } from "react-icons/di"
-import { MdTipsAndUpdates } from "react-icons/md"
-import { FaDatabase, FaGamepad } from "react-icons/fa"
+} from '@chakra-ui/react'
+import { AiFillHtml5, AiFillMobile } from 'react-icons/ai'
+import { BsFillTerminalFill, BsFillHddNetworkFill } from 'react-icons/bs'
+import { DiJavascript1 } from 'react-icons/di'
+import { MdTipsAndUpdates } from 'react-icons/md'
+import { FaDatabase, FaGamepad } from 'react-icons/fa'
 
-const CatelogySection = () => {
+const CategorySection = () => {
     const data = [
         {
-            title: "Design UX - UI",
+            title: 'Design UX - UI',
             totalUser: 200,
             icon: <AiFillHtml5 />,
         },
         {
             totalUser: 200,
-            title: "Web development",
+            title: 'Web development',
             icon: <BsFillTerminalFill />,
         },
         {
             totalUser: 200,
-            title: "Programing",
+            title: 'Programing',
             icon: <DiJavascript1 />,
         },
-        { title: "Mobile dev ", totalUser: 200, icon: <AiFillMobile /> },
-        { title: "Tip & Trick", totalUser: 200, icon: <MdTipsAndUpdates /> },
-        { title: "Database", totalUser: 200, icon: <FaDatabase /> },
-        { title: "Game development", totalUser: 200, icon: <FaGamepad /> },
-        { title: "Network", totalUser: 200, icon: <BsFillHddNetworkFill /> },
+        { title: 'Mobile dev ', totalUser: 200, icon: <AiFillMobile /> },
+        { title: 'Tip & Trick', totalUser: 200, icon: <MdTipsAndUpdates /> },
+        { title: 'Database', totalUser: 200, icon: <FaDatabase /> },
+        { title: 'Game development', totalUser: 200, icon: <FaGamepad /> },
+        { title: 'Network', totalUser: 200, icon: <BsFillHddNetworkFill /> },
     ]
     return (
         <Box p='4'>
@@ -52,10 +52,10 @@ const CatelogySection = () => {
 
                 <Grid
                     templateColumns={[
-                        "repeat(1, 1fr)",
-                        "repeat(2, 1fr)",
-                        "repeat(3, 1fr)",
-                        "repeat(4, 1fr)",
+                        'repeat(1, 1fr)',
+                        'repeat(2, 1fr)',
+                        'repeat(3, 1fr)',
+                        'repeat(4, 1fr)',
                     ]}
                     gap='4'
                 >
@@ -81,7 +81,7 @@ const CatelogySection = () => {
                                     >
                                         Số học viên {cate.totalUser}
                                     </Text>
-                                    <Button colorScheme={"messenger"} size='xs'>
+                                    <Button colorScheme={'messenger'} size='xs'>
                                         Đọc thêm
                                     </Button>
                                 </Box>
@@ -94,4 +94,4 @@ const CatelogySection = () => {
     )
 }
 
-export default CatelogySection
+export default CategorySection
