@@ -5,10 +5,13 @@ import {
     Box,
     Button,
     Divider,
+    Flex,
     HStack,
     List,
     ListIcon,
     ListItem,
+    Skeleton,
+    SkeletonCircle,
     Stat,
     StatHelpText,
     StatNumber,
@@ -20,19 +23,20 @@ import { BsBook } from 'react-icons/bs'
 import { HiOutlineTicket } from 'react-icons/hi'
 import { MdCheckCircle } from 'react-icons/md'
 import { useSelector } from 'react-redux'
+import RenderStar from '../../RenderStar'
 
 export default function CourseAsideMobile() {
-    const { courseDetail } = useSelector((sta) => sta.course)
+    const { courseDetail, isLoadingDetail } = useSelector((sta) => sta.course)
     const { writer, price, include, star } = courseDetail
-    return (
+    return !isLoadingDetail ? (
         <Box display={['block', 'block', 'none']}>
             <Divider />
             <Stat>
-                <StatNumber>Giá : £ {price.value}</StatNumber>
+                <StatNumber>Giá : £ {price?.value}</StatNumber>
                 <StatHelpText display='flex' alignItems='center'>
-                    <strike>£ 150</strike>
+                    <strike>£ {price?.value}</strike>
                     <Badge colorScheme='green' ml='4'>
-                        tiết kiệm 28%
+                        tiết kiệm 0%
                     </Badge>
                 </StatHelpText>
             </Stat>
@@ -94,19 +98,27 @@ export default function CourseAsideMobile() {
                     align='center'
                     justify='space-between'
                 >
+                    {/* // star  */}
                     <HStack>
                         <Text fontSize='xs'>{star || 0}</Text>
-                        <StarIcon color='yellow.400' fontSize='xs' />
-                        <StarIcon color='yellow.400' fontSize='xs' />
-                        <StarIcon color='yellow.400' fontSize='xs' />
-                        <StarIcon color='yellow.400' fontSize='xs' />
-                        <StarIcon color='yellow.400' fontSize='xs' />
+                        <RenderStar star={star || 0} />
                     </HStack>
                     <Button leftIcon={<BsBook />} size='xs'>
                         21 Khóa học
                     </Button>
                 </HStack>
             </Box>
+        </Box>
+    ) : (
+        <Box display={['block', 'block', 'none']}>
+            <Skeleton h='60px' w='full' mb='2' rounded='md' />
+            <Skeleton h='40px' w='full' mb='2' rounded='md' />
+            <Skeleton h='40px' w='full' mb='2' rounded='md' />
+            <Flex mb='2'>
+                <SkeletonCircle size='10' flexShrink='0' />
+                <Skeleton h='40px' w='full' rounded='md' ml='2' />
+            </Flex>
+            <Skeleton h='20px' w='full' mb='2' rounded='md' />
         </Box>
     )
 }

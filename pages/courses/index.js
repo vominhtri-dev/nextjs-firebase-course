@@ -17,12 +17,13 @@ export default function index() {
                 <link rel='icon' type='image/png' href='/code.png' />
             </Head>
             <Banner
-                pageText='Course'
+                bannerText='Course'
                 headingText='Học lập trình cho người mới bắt đầu'
                 desText='Nền tảng Tridev.io cung cấp cho bạn các khóa học,
                 bài giảng, thông tin về lập trình một cách hoàn toàn
                 miễn phí.'
-                ctaText='Học ngay nào'
+                primaryColor='#f12711'
+                secondaryColor='#f5af19'
             />
 
             <CategoryTab />

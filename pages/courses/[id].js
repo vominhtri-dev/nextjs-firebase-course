@@ -1,15 +1,5 @@
-import { ChevronRightIcon } from '@chakra-ui/icons'
-import {
-    Box,
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    Container,
-    Grid,
-    GridItem,
-} from '@chakra-ui/react'
+import { Box, Container, Grid, GridItem } from '@chakra-ui/react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -25,11 +15,10 @@ import {
     resetLoadingDetail,
 } from '../../redux/slice/courseSlice'
 import { db } from '../../firebase.config'
+import CourseBreadCrumb from '../../components/pages/course/CourseBreadCrumb'
 
 export default function CourseDetail() {
-    const { courseDetail, trigger, isLoadingDetail } = useSelector(
-        (sta) => sta.course
-    )
+    const { courseDetail, trigger } = useSelector((sta) => sta.course)
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -65,10 +54,6 @@ export default function CourseDetail() {
         }
     }, [trigger, dispatch])
 
-    if (isLoadingDetail) {
-        return <>loading</>
-    }
-
     return (
         <>
             <Head>
@@ -84,27 +69,8 @@ export default function CourseDetail() {
             </Head>
             <Box pb='4' pt='8'>
                 <Container maxW={[1024]}>
-                    <Breadcrumb separator={<ChevronRightIcon />}>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href='/' as={Link}>
-                                Trang chủ
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href='/courses' as={Link}>
-                                Khóa học
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-
-                        <BreadcrumbItem isCurrentPage>
-                            <BreadcrumbLink
-                                href={`/courses/${courseDetail?.slug}`}
-                            >
-                                {courseDetail?.title}
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                    </Breadcrumb>
+                    {/* BreadCrumb  */}
+                    <CourseBreadCrumb />
                     {/* Container  */}
                     <Grid gridTemplateColumns='repeat(12, 1fr)' my='4' gap='4'>
                         <GridItem

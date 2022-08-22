@@ -21,6 +21,7 @@
 
 .banner__text:nth-child(3) {
   transform: translateY(-120px);
+  overflow: hidden;
   z-index: 1;
 }
 
@@ -40,8 +41,8 @@
   height: 100%;
   left: 0;
   bottom: 40px;
-  background-color: #4549e0;
   filter: blur(10px);
+  /* background-color: #4549e0; */
 }
 
 .banner__slash {

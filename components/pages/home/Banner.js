@@ -7,21 +7,28 @@ import {
     Container,
     Flex,
     Text,
-} from "@chakra-ui/react"
-import { ChevronRightIcon } from "@chakra-ui/icons"
-import Link from "next/link"
-import BannerHeading from "./BannerHeading"
+} from '@chakra-ui/react'
+import { ChevronRightIcon } from '@chakra-ui/icons'
+import Link from 'next/link'
+import styles from '../../../styles/banner.module.css'
 
 const Banner = (props) => {
-    const { pageText, headingText, desText, ctaText } = props
+    const {
+        bannerText,
+        headingText,
+        desText,
+        ctaText,
+        primaryColor,
+        secondaryColor,
+    } = props
     return (
         <Box
-            bg='#4549e0'
+            bg={primaryColor}
             bgGradient={{
-                base: "#4549e0",
-                md: "linear(to-r, #4549e0, #4549e0, #4549e0, #805AD5)",
+                base: primaryColor,
+                md: `linear(to-r,${primaryColor}, ${primaryColor}, ${primaryColor}, ${secondaryColor})`,
             }}
-            h={["auto", "auto", "350"]}
+            h={['auto', 'auto', '350']}
             textColor='white'
         >
             <Container maxW={[1024]}>
@@ -31,23 +38,54 @@ const Banner = (props) => {
                     separator={<ChevronRightIcon />}
                 >
                     <BreadcrumbItem>
-                        <BreadcrumbLink href='/'>Trang chủ</BreadcrumbLink>
+                        <Link href='/'>
+                            <BreadcrumbLink>Trang chủ</BreadcrumbLink>
+                        </Link>
                     </BreadcrumbItem>
 
                     <BreadcrumbItem>
                         <Link href='/courses'>
-                            <BreadcrumbLink href='/#'>Khóa học</BreadcrumbLink>
+                            <BreadcrumbLink>Khóa học</BreadcrumbLink>
                         </Link>
                     </BreadcrumbItem>
                 </Breadcrumb>
 
-                <Flex direction={["column", "column", "row"]}>
-                    <BannerHeading text={pageText} />
-                    <Box pl={["0", "0", "8"]}>
+                <Flex direction={['column', 'column', 'row']}>
+                    <Box maxW={['auto', '400']} height='200'>
+                        <Box
+                            className={styles.banner__text}
+                            bgColor={primaryColor}
+                        >
+                            <Box
+                                bgColor={primaryColor}
+                                className={styles.banner__slash}
+                            ></Box>
+                            {bannerText}
+                        </Box>
+                        <Text
+                            className={styles.banner__text}
+                            bgColor={primaryColor}
+                            _after={{
+                                bgColor: primaryColor,
+                            }}
+                        >
+                            {bannerText}
+                        </Text>
+                        <Text
+                            className={styles.banner__text}
+                            bgColor={primaryColor}
+                            _after={{
+                                bgColor: primaryColor,
+                            }}
+                        >
+                            {bannerText}
+                        </Text>
+                    </Box>
+                    <Box pl={['0', '0', '8']}>
                         <Text fontSize='3xl' fontWeight='bold'>
                             {headingText && headingText}
                         </Text>
-                        <Text fontSize='lg' my='4' fontWeight={"light"}>
+                        <Text fontSize='lg' my='4' fontWeight={'light'}>
                             {desText && desText}
                         </Text>
                         <Button
@@ -55,7 +93,7 @@ const Banner = (props) => {
                             rightIcon={<ChevronRightIcon />}
                             mb='8'
                         >
-                            {ctaText && ctaText}
+                            {(ctaText && ctaText) || 'Học ngay nào'}
                         </Button>
                     </Box>
                 </Flex>

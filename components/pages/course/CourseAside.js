@@ -6,10 +6,13 @@ import {
     Button,
     Container,
     Divider,
+    Flex,
     HStack,
     List,
     ListIcon,
     ListItem,
+    Skeleton,
+    SkeletonCircle,
     Stat,
     StatHelpText,
     StatNumber,
@@ -21,11 +24,12 @@ import { BsBook } from 'react-icons/bs'
 import { HiOutlineTicket } from 'react-icons/hi'
 import { MdCheckCircle } from 'react-icons/md'
 import { useSelector } from 'react-redux'
+import RenderStar from '../../RenderStar'
 
 export default function CourseAside() {
-    const { courseDetail } = useSelector((sta) => sta.course)
+    const { courseDetail, isLoadingDetail } = useSelector((sta) => sta.course)
     const { writer, price, include, star } = courseDetail
-    return (
+    return !isLoadingDetail ? (
         <Box
             pb='4'
             pt='8'
@@ -39,9 +43,9 @@ export default function CourseAside() {
                 <Stat>
                     <StatNumber>Giá : £ {price?.value}</StatNumber>
                     <StatHelpText display='flex' alignItems='center'>
-                        <strike>£ 150</strike>
+                        <strike> £ {price?.value}</strike>
                         <Badge colorScheme='green' ml='4'>
-                            tiết kiệm 28%
+                            tiết kiệm 0%
                         </Badge>
                     </StatHelpText>
                 </Stat>
@@ -105,13 +109,10 @@ export default function CourseAside() {
                         align='center'
                         justify='space-between'
                     >
+                        {/* // star  */}
                         <HStack>
                             <Text fontSize='xs'>{star || 0}</Text>
-                            <StarIcon color='yellow.400' fontSize='xs' />
-                            <StarIcon color='yellow.400' fontSize='xs' />
-                            <StarIcon color='yellow.400' fontSize='xs' />
-                            <StarIcon color='yellow.400' fontSize='xs' />
-                            <StarIcon color='yellow.400' fontSize='xs' />
+                            <RenderStar star={star || 0} />
                         </HStack>
                         <Button leftIcon={<BsBook />} size='xs'>
                             21 Khóa học
@@ -119,6 +120,26 @@ export default function CourseAside() {
                     </HStack>
                 </Box>
             </Container>
+        </Box>
+    ) : (
+        <Box
+            pb='4'
+            pt='8'
+            px='4'
+            bg='white'
+            rounded='lg'
+            shadow='sm'
+            pos='sticky'
+            top='80px'
+        >
+            <Skeleton h='60px' w='full' mb='2' rounded='md' />
+            <Skeleton h='40px' w='full' mb='2' rounded='md' />
+            <Skeleton h='40px' w='full' mb='2' rounded='md' />
+            <Flex mb='2'>
+                <SkeletonCircle size='10' flexShrink='0' />
+                <Skeleton h='40px' w='full' rounded='md' ml='2' />
+            </Flex>
+            <Skeleton h='20px' w='full' mb='2' rounded='md' />
         </Box>
     )
 }

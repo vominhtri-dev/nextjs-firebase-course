@@ -8,19 +8,22 @@ import {
     Heading,
     HStack,
     IconButton,
+    Skeleton,
+    SkeletonCircle,
     Text,
 } from '@chakra-ui/react'
-import { StarIcon, WarningIcon } from '@chakra-ui/icons'
+import { WarningIcon } from '@chakra-ui/icons'
 import { BsFillHeartFill } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import toTimeVn from '../../../helper/toTimeVn'
 import { default as renderLevel } from '../../../helper/level'
+import RenderStar from '../../RenderStar'
 
 export default function CourseHeading() {
-    const { courseDetail } = useSelector((sta) => sta.course)
+    const { courseDetail, isLoadingDetail } = useSelector((sta) => sta.course)
     const { title, star, level, totalUsers, updatedAt, category } = courseDetail
 
-    return (
+    return !isLoadingDetail ? (
         <Box pos='relative'>
             <Heading as='h1' size={['lg', 'xl']} my='4' pr='14'>
                 {title}
@@ -30,16 +33,12 @@ export default function CourseHeading() {
                 <Badge colorScheme='green' px='3'>
                     {category?.title}
                 </Badge>
-
+                {/* // star */}
                 <span>{star || 0}</span>
-                <StarIcon color='yellow.400' />
-                <StarIcon color='yellow.400' />
-                <StarIcon color='yellow.400' />
-                <StarIcon color='yellow.400' />
-                <StarIcon color='yellow.400' />
+                <RenderStar star={star || 0} />
             </HStack>
             <Grid gridTemplateColumns='repeat(10, 1fr)' my='4'>
-                <GridItem colSpan={['10', '10', '8']}>
+                <GridItem colSpan='10'>
                     <Grid gridTemplateColumns='repeat(12, 1fr)' gap='2'>
                         <GridItem colSpan={['4', '3', '3']}>
                             <Text fontWeight='light' color='gray.800'>
@@ -87,6 +86,12 @@ export default function CourseHeading() {
                     />
                 </Flex>
             </Grid>
+        </Box>
+    ) : (
+        <Box>
+            <Skeleton h='60px' w='full' mb='2' rounded='md' />
+            <Skeleton h='40px' w='full' mb='2' rounded='md' />
+            <Skeleton h='40px' w='full' mb='2' rounded='md' />
         </Box>
     )
 }

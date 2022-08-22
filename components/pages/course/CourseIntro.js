@@ -1,9 +1,9 @@
-import { AspectRatio, Box } from '@chakra-ui/react'
+import { AspectRatio, Box, Skeleton } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
 
 const CourseIntro = () => {
-    const { courseDetail } = useSelector((sta) => sta.course)
+    const { courseDetail, isLoadingDetail } = useSelector((sta) => sta.course)
     const { banner } = courseDetail
     return (
         <Box>
@@ -11,13 +11,17 @@ const CourseIntro = () => {
                 {/* <video controls crossOrigin='anonymous'>
                     <source src='' type='video/mp4' poster='./12.png' />
                 </video> */}
-                <Image
-                    src={banner}
-                    layout='fill'
-                    alt='intro_course'
-                    objectFit='cover'
-                    priority='true'
-                />
+                {!isLoadingDetail ? (
+                    <Image
+                        src={banner}
+                        layout='fill'
+                        alt='intro_course'
+                        objectFit='cover'
+                        priority='low'
+                    />
+                ) : (
+                    <Skeleton h='350' w='full' mb='2' rounded='md' />
+                )}
             </AspectRatio>
         </Box>
     )
