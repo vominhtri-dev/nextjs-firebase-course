@@ -18,16 +18,22 @@ import {
     Text,
 } from '@chakra-ui/react'
 import React from 'react'
+import { useRouter } from 'next/router'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { BsBook } from 'react-icons/bs'
 import { HiOutlineTicket } from 'react-icons/hi'
 import { MdCheckCircle } from 'react-icons/md'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { addToCart } from '../../../redux/slice/cartSlice'
 import RenderStar from '../../RenderStar'
 
 export default function CourseAsideMobile() {
     const { courseDetail, isLoadingDetail } = useSelector((sta) => sta.course)
     const { writer, price, include, star } = courseDetail
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const handleAddToCart = (item) => dispatch(addToCart(item))
+
     return !isLoadingDetail ? (
         <Box display={['block', 'block', 'none']}>
             <Divider />
@@ -44,6 +50,7 @@ export default function CourseAsideMobile() {
                 colorScheme='messenger'
                 w='full'
                 leftIcon={<AiOutlineShoppingCart />}
+                onClick={() => handleAddToCart(courseDetail)}
             >
                 Thêm vào giỏ hàng
             </Button>
@@ -53,6 +60,10 @@ export default function CourseAsideMobile() {
                 w='full'
                 mt='4'
                 leftIcon={<HiOutlineTicket />}
+                onClick={() => {
+                    handleAddToCart(courseDetail)
+                    router.push('/cart')
+                }}
             >
                 Mua ngay
             </Button>

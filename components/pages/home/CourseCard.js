@@ -21,6 +21,8 @@ import {
 import { default as levelRender } from '../../../helper/level'
 import Image from 'next/image'
 import renderByLine from '../../../helper/renderByLine'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../../redux/slice/cartSlice'
 
 const CourseCard = ({ course }) => {
     const {
@@ -35,6 +37,11 @@ const CourseCard = ({ course }) => {
         view,
     } = course
 
+    const dispatch = useDispatch()
+
+    // Handle add cart
+    const handleAddToCart = (item) => dispatch(addToCart(item))
+
     return (
         <Box overflow='hidden' bg='white' shadow='md' borderRadius='10px'>
             <Box pos='relative'>
@@ -45,7 +52,6 @@ const CourseCard = ({ course }) => {
                         layout='fill'
                         objectFit='cover'
                         priority='low'
-                        // priority='true'
                     />
                 </Box>
 
@@ -158,6 +164,7 @@ const CourseCard = ({ course }) => {
                         size='sm'
                         w={['full', 'auto']}
                         leftIcon={<PlusSquareIcon />}
+                        onClick={() => handleAddToCart(course)}
                     >
                         Thêm giỏ hàng
                     </Button>
