@@ -9,48 +9,58 @@ import {
     Button,
     Avatar,
     useMediaQuery,
-} from "@chakra-ui/react"
-import { useRef, useState } from "react"
-import NextLink from "next/link"
-import { useSelector, useDispatch } from "react-redux"
-import { logoutService } from "../../service/auth"
-import { logoutAction } from "../../redux/slice/authSlice"
-import { useRouter } from "next/router"
+    useToast,
+} from '@chakra-ui/react'
+import { useRef, useState } from 'react'
+import NextLink from 'next/link'
+import { useSelector, useDispatch } from 'react-redux'
+import { logoutService } from '../../service/auth'
+import { logoutAction } from '../../redux/slice/authSlice'
+import { useRouter } from 'next/router'
 const NavbarUser = () => {
+    const toast = useToast()
     const [isModalOpen, setIsModalOpen] = useState(false)
     const { isLogin, currentUser } = useSelector((st) => st.auth)
     const modelRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter()
-    const [isLargerThan768] = useMediaQuery("(min-width: 768px)")
+    const [isLargerThan768] = useMediaQuery('(min-width: 768px)')
 
     // funtion logout
     const handleLogout = async () => {
         setIsModalOpen(false)
         await logoutService()
         dispatch(logoutAction())
+        toast({
+            title: 'Đăng xuất thành công',
+            status: 'success',
+            duration: 2000,
+            position: 'top-right',
+            isClosable: true,
+        })
     }
 
     useOutsideClick({
         ref: modelRef,
         handler: () => setIsModalOpen(false),
     })
+
     const NAVLINK = [
         {
-            path: "/profile",
-            title: "Trang cá nhân",
+            path: `/profile/${currentUser.uid}`,
+            title: 'Trang cá nhân',
         },
         {
-            path: "/courses",
-            title: "Danh sách khóa học",
+            path: '/courses',
+            title: 'Danh sách khóa học',
         },
         {
-            path: "/blog",
-            title: "Danh sách yêu thích",
+            path: '/blog',
+            title: 'Danh sách yêu thích',
         },
         {
-            path: "/bookmark",
-            title: "Bài viết đã lưu",
+            path: '/bookmark',
+            title: 'Bài viết đã lưu',
         },
     ]
 
@@ -62,6 +72,7 @@ const NavbarUser = () => {
                     size='sm'
                     name={currentUser?.displayName}
                     src={currentUser?.photoURL}
+                    cursor='pointer'
                 />
             </HStack>
         ) : (
@@ -74,6 +85,7 @@ const NavbarUser = () => {
                     size='sm'
                     name={currentUser?.displayName}
                     src={currentUser?.photoURL}
+                    cursor='pointer'
                 />
             </Button>
         )
@@ -116,12 +128,14 @@ const NavbarUser = () => {
                                 {currentUser.displayName}
                             </Text>
                             <Badge colorScheme='green' fontSize='0.7rem'>
-                                Thành viên mới
+                                {currentUser?.isAdmin
+                                    ? 'Quản trị viên'
+                                    : 'Thành viên mới'}
                             </Badge>
                         </Box>
                     </HStack>
 
-                    {currentUser.isAdmin && (
+                    {currentUser?.isAdmin && (
                         <Text
                             onClick={() => setIsModalOpen(false)}
                             my='2'
@@ -133,7 +147,7 @@ const NavbarUser = () => {
                     {NAVLINK.map((navlink, idx) => (
                         <Text
                             color={
-                                router.pathname === navlink.path && "#4549e0"
+                                router.pathname === navlink.path && '#4549e0'
                             }
                             key={idx}
                             onClick={() => setIsModalOpen(false)}

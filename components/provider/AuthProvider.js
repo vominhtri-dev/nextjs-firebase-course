@@ -11,12 +11,14 @@ const AuthProvider = ({ children }) => {
     const { isLoading } = useSelector((st) => st.auth)
     const dispatch = useDispatch()
 
-    // to check firebase auth state
+    // This effect watch whatever firebase auth state change
+    // This run automtic when user regicter
     useEffect(() => {
         const unsubscribe = observerService(async (user) => {
             if (user) {
                 const { email, accessToken, uid, displayName, photoURL } = user
                 let isAdmin = false
+                // check isAdmin in collection user
                 const usersRef = collection(db, 'users')
                 const q = query(
                     usersRef,
