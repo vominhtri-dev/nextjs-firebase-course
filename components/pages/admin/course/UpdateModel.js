@@ -120,7 +120,9 @@ const UpdateModel = ({ course }) => {
     const handleSubmit = async (values, actions) => {
         try {
             const { displayName, uid, photoURL } = currentUser
-            const slug = slugify(values.title.trim().toLowerCase())
+            const slug = slugify(values.title.trim().toLowerCase(), {
+                remove: /[*+~.()'"!:@]/g,
+            })
             const categoryRef = doc(db, `category`, values.category)
             // Check List Include course
             const listIncludeWithOutEmpty = listInclude.filter(
