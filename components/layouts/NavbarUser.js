@@ -47,7 +47,7 @@ const NavbarUser = () => {
 
     const NAVLINK = [
         {
-            path: `/profile/${currentUser.uid}`,
+            path: `/profile/${currentUser.uid}/overview`,
             title: 'Trang cá nhân',
         },
         {

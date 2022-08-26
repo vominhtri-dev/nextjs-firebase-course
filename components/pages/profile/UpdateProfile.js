@@ -8,10 +8,12 @@ import { LIST_GENDER } from '../../../helper/gender'
 import { doc, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { db } from '../../../firebase.config'
 import { getTrigger } from '../../../redux/slice/profileSlice'
+import { useRouter } from 'next/router'
 const UpdateProfile = () => {
     const { profile } = useSelector((st) => st.profile)
     const toast = useToast()
     const dispatch = useDispatch()
+    const router = useRouter()
 
     // Init value in form
     const init = {
@@ -41,6 +43,8 @@ const UpdateProfile = () => {
                 position: 'top-right',
                 isClosable: true,
             })
+            router.push(`/profile/${profile.uid}/overview`)
+
             actions.resetForm()
             actions.setSubmitting(false)
         } catch (error) {

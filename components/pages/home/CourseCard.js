@@ -53,7 +53,7 @@ const CourseCard = ({ course }) => {
                         priority='low'
                     />
                 </Box>
-                <NextLink href={`/profile/${writer?.uid}`} passHref>
+                <NextLink href={`/profile/${writer?.uid}/overview`} passHref>
                     <Button
                         colorScheme='blackAlpha'
                         pos='absolute'
