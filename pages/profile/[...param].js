@@ -5,12 +5,17 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../firebase.config'
-import { addProfile, resetLoading } from '../../redux/slice/profileSlice'
+import {
+    addProfile,
+    resetLoading,
+    setIsCurrentUser,
+} from '../../redux/slice/profileSlice'
 import ProfileBreadCrumb from '../../components/pages/profile/ProfileBreadCrumb'
 import ProfileContainer from '../../components/pages/profile/ProfileContainer'
 
 export default function Profile() {
     const { profile, trigger } = useSelector((sta) => sta.profile)
+    const { currentUser } = useSelector((st) => st.auth)
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -28,9 +33,7 @@ export default function Profile() {
                 if (result.docs.length > 0) {
                     const doc = result.docs[0]
                     const userDoc = { _id: doc.id, ...doc.data() }
-                    // console.log(userDoc)
                     // Redirect in to overview
-                    router.push(`/profile/${slugUid}/overview`)
                     dispatch(addProfile(userDoc))
                 } else {
                     console.log('user not found')
@@ -42,11 +45,21 @@ export default function Profile() {
         }
 
         getProfile()
-
         return () => {
             dispatch(resetLoading())
         }
-    }, [trigger, dispatch])
+    }, [trigger, dispatch, router.query.param[0]])
+
+    // Check is current user view profile
+    useEffect(() => {
+        dispatch(setIsCurrentUser(profile.uid === currentUser.uid))
+        // in case user try to view the profile not same with they account
+        if (profile.uid !== currentUser.uid) {
+            if (router.query.param[1] !== 'overview') {
+                router.push(`/profile/${router.query.param[0]}/overview`)
+            }
+        }
+    }, [profile, currentUser, router.query])
 
     return (
         <>

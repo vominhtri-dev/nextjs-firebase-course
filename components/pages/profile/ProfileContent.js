@@ -1,15 +1,29 @@
+import { Skeleton } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 import BoughtCourse from './BoughtCourse'
 import Liked from './Liked'
 import Overview from './Overview'
 import ProfilePosts from './ProfilePosts'
 import UpdateProfile from './UpdateProfile'
 const ProfileContent = () => {
-    const { query } = useRouter()
-    const subPath = query.param[1]
+    const router = useRouter()
+    const subPath = router.query.param[1]
+    const { isCurrentUser, isLoading } = useSelector((state) => state.profile)
 
-    const Subcomponet = () =>
-        PROFILE_LINK.find((link) => link.slug === subPath)?.Component || <></>
+    const Subcomponet = () => {
+        // in case user try to view the profile not same with they account
+        if (!isCurrentUser) {
+            // return here to prevent the user can view orther router
+            return <Overview />
+        }
+
+        return (
+            PROFILE_LINK.find((link) => link.slug === subPath)?.Component || (
+                <></>
+            )
+        )
+    }
 
     const PROFILE_LINK = [
         {
@@ -41,7 +55,8 @@ const ProfileContent = () => {
 
     return (
         <>
-            <Subcomponet />
+            {!isLoading && <Subcomponet />}
+            {isLoading && <Skeleton h='200' rounded='md' />}
         </>
     )
 }
