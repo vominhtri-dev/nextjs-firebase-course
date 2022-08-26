@@ -92,7 +92,7 @@ export default function LoginForm() {
     const handleGGlogin = async () => {
         try {
             const { user } = await loginGGService()
-            const { email, accessToken, uid, displayName, photoURL } = user
+            const { email, uid, displayName, photoURL } = user
             const usersRef = collection(db, 'users')
             const q = query(usersRef, where('uid', '==', uid))
             const foundUser = await getDocs(q)
@@ -100,7 +100,6 @@ export default function LoginForm() {
                 // if isEmpty  create user doc
                 await addDoc(collection(db, 'users'), {
                     email,
-                    accessToken,
                     uid,
                     displayName,
                     photoURL,

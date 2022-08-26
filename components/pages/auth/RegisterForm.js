@@ -62,10 +62,10 @@ export default function RegisterForm() {
     }
 
     // Create user doc
-    const createUserDoc = async ({ email, accessToken, uid, displayName }) => {
+    const createUserDoc = async ({ email, uid, displayName }) => {
         const addUser = await addDoc(collection(db, 'users'), {
             email,
-            accessToken,
+
             uid,
             displayName,
             createdAt: serverTimestamp(),
@@ -85,7 +85,7 @@ export default function RegisterForm() {
             await updateFullnameService(values.fullname)
             const { email, accessToken, uid, displayName } = user
             // Create user into collection
-            createUserDoc({ email, accessToken, uid, displayName })
+            createUserDoc({ email, uid, displayName })
 
             toast({
                 title: 'Đăng ký thành công',

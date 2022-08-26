@@ -3,7 +3,6 @@ import NextLink from 'next/link'
 import { BsBriefcase, BsHeartFill } from 'react-icons/bs'
 import { FaUserFriends } from 'react-icons/fa'
 import { AiFillEye } from 'react-icons/ai'
-
 import {
     Avatar,
     Box,
@@ -54,29 +53,29 @@ const CourseCard = ({ course }) => {
                         priority='low'
                     />
                 </Box>
-
-                <Button
-                    colorScheme='blackAlpha'
-                    pos='absolute'
-                    left='4'
-                    bottom='4'
-                    px='2'
-                >
-                    <Avatar
-                        size='xs'
-                        name={writer?.displayName}
-                        src={writer?.photoURL}
-                    />
-                    <Box ml='2' textAlign='left'>
-                        <Text fontSize='sm' my='1'>
-                            {writer?.displayName}
-                        </Text>
-                        <Text fontSize='xx-small' my='1'>
-                            Quản trị viên
-                        </Text>
-                    </Box>
-                </Button>
-
+                <NextLink href={`/profile/${writer?.uid}`} passHref>
+                    <Button
+                        colorScheme='blackAlpha'
+                        pos='absolute'
+                        left='4'
+                        bottom='4'
+                        px='2'
+                    >
+                        <Avatar
+                            size='xs'
+                            name={writer?.displayName}
+                            src={writer?.photoURL}
+                        />
+                        <Box ml='2' textAlign='left'>
+                            <Text fontSize='sm' my='1'>
+                                {writer?.displayName}
+                            </Text>
+                            <Text fontSize='xx-small' my='1'>
+                                Quản trị viên
+                            </Text>
+                        </Box>
+                    </Button>
+                </NextLink>
                 <IconButton
                     aria-label='like'
                     pos='absolute'

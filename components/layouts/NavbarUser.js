@@ -130,7 +130,7 @@ const NavbarUser = () => {
                             <Badge colorScheme='green' fontSize='0.7rem'>
                                 {currentUser?.isAdmin
                                     ? 'Quản trị viên'
-                                    : 'Thành viên mới'}
+                                    : 'Thành viên'}
                             </Badge>
                         </Box>
                     </HStack>
