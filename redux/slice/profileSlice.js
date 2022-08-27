@@ -5,6 +5,9 @@ const initialState = {
     isLoading: true,
     trigger: false,
     isCurrentUser: false,
+    boughtList: [],
+    likedList: [],
+    postList: [],
 }
 
 export const profileSlice = createSlice({
@@ -13,6 +16,18 @@ export const profileSlice = createSlice({
     reducers: {
         addProfile: (state, action) => {
             state.profile = action.payload
+            state.isLoading = false
+        },
+        addBoughtList: (state, action) => {
+            state.boughtList = action.payload
+            state.isLoading = false
+        },
+        addLikedList: (state, action) => {
+            state.likedList = action.payload
+            state.isLoading = false
+        },
+        addPostList: (state, action) => {
+            state.postList = action.payload
             state.isLoading = false
         },
         getTrigger: (state, action) => {
