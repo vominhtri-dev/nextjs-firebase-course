@@ -31,6 +31,7 @@ const CartList = () => {
                         position='relative'
                         rounded='md'
                         overflow='hidden'
+                        flexShrink='0'
                     >
                         <Image
                             src={course?.thumbnail}

@@ -23,7 +23,6 @@ import {
     where,
 } from 'firebase/firestore'
 import { db } from '../../../firebase.config'
-import { GoogleAuthProvider, linkWithPopup } from 'firebase/auth'
 
 export default function LoginForm() {
     const dispatch = useDispatch()

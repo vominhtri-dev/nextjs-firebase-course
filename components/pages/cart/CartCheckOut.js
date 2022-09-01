@@ -13,10 +13,17 @@ import {
 import React from 'react'
 // import { CloseIcon } from '@chakra-ui/icons'
 import { useSelector, useDispatch } from 'react-redux'
+import RequiredAuth from '../auth/RequiredAuth'
 
 const CartCheckOut = () => {
     const { cart, quantity, total } = useSelector((state) => state.cart)
+    const { isLogin } = useSelector((state) => state.auth)
+
     const dispatch = useDispatch()
+
+    // handle payment
+    const handlePayment = () => {}
+
     return (
         <Box bg='white' p='4' rounded='md' shadow='md'>
             <Text fontSize='lg'>Cộng trước</Text>
@@ -67,9 +74,17 @@ const CartCheckOut = () => {
                     £ {total}
                 </Heading>
             </HStack>
-            <Button colorScheme='messenger' w='full'>
-                Thanh toán
-            </Button>
+            {isLogin ? (
+                <Button
+                    colorScheme='messenger'
+                    w='full'
+                    onClick={handlePayment}
+                >
+                    Thanh toán
+                </Button>
+            ) : (
+                <RequiredAuth titleBtn='Thanh toán' />
+            )}
         </Box>
     )
 }
