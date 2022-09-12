@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import RequiredAuth from '../auth/RequiredAuth'
 
 const CartCheckOut = () => {
-    const { cart, quantity, total } = useSelector((state) => state.cart)
+    const { quantity, total } = useSelector((state) => state.cart)
     const { isLogin } = useSelector((state) => state.auth)
 
     const dispatch = useDispatch()

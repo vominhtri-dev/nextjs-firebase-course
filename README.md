@@ -1,34 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## TRIDEV - Website khóa học
 
-## Getting Started
+<img src="https://lh3.googleusercontent.com/a-/AFdZucqIL2wn6BiXMqO1dHFJcD2PpHfy79CkoJUBSeqg=s96-c" height="100" alt="logo">
 
-First, run the development server:
+Website được viết bằng nextjs, chakra ui, redux toolkit, firebase. [vominhtridev.tk](https://www.vominhtridev.tk).
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Đường dẫn
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-   Đường dẫn Trang chủ : [Link trang chủ](https://www.vominhtridev.tk)
+-   Đường dẫn Github : [Link github ](https://github.com/vominhtri-dev/nextjs-firebase-course)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Chức năng
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-   Trang Client: Trang chủ, trang danh sách khóa học, trang chi tiết khóa học, trang thanh toán, trang cá nhân.
+-   Trang Admin: Quản lý khóa học (CURD), quản ly danh mục (CURD)
+-   Đăng nhập (email hoặc tài khoản google), đăng ký, quên mật khẩu.
+-   Giỏ hàng (thêm, xóa).
+-   Trang cá nhân, cập nhật thông tin.
